@@ -1,0 +1,17 @@
+# NOTE: This file should describe the mininmal dependencies needed to run the
+# code. You need to ensure that the items and versions in this file exactly
+# match that in pyproject.toml.
+#
+azure-data-tables==12.7.0
+azure-identity==1.22.0
+bs4==0.0.2
+dotenv==0.9.9
+fastapi==0.115.12
+feedparser==6.0.11
+openai==1.77.0
+pandas==2.2.3
+playwright==1.52.0
+pydantic==2.11.4
+sqlmodel==0.0.24
+trafilatura==2.0.0
+typer==0.16.0

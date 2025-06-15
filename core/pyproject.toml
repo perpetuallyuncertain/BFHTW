@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=80", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "BFHTW"
+version = "0.1.0"
+description = "AI powered data repository and collection specifically related to research into Hepatoblastoma cures"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "azure-data-tables==12.7.0",
+    "azure-identity==1.22.0",
+    "bs4==0.0.2",
+    "dotenv==0.9.9",
+    "openai==1.77.0",
+    "pandas==2.2.3",
+    "pydantic==2.11.4",
+    "google-cloud-secret-manager==2.7.2"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"TIQAI.ai_utils.content_ranker" = ["*.txt"]
+"TIQAI.ai_utils.compare" = ["*.txt"]

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Environment files
+.env
+
+#Downloaded data
+core/src/BFHTW/sources/pubmed_pmc/data
+core/src/BFHTW/sources/pubmed_pmc/temp
+core/src/BFHTW/test_data
