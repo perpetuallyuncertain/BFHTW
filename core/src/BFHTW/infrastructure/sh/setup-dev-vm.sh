@@ -107,6 +107,17 @@ echo "Enabling fail2ban..."
 sudo systemctl enable fail2ban --now
 
 ################################################################################
+echo "Deploying environment variables"
+
+if [[ ! -f "${SCRIPT_DIR}/save_env.sh" ]]; then
+    echo "${SCRIPT_DIR}/save_env.sh not found. Skipping environment deployment."
+else
+    sudo "${SCRIPT_DIR}/save_env.sh"
+    echo "Environment variables saved"
+fi
+
+################################################################################
+
 echo "VM Setup Complete"
 
 echo "Rebooting to finalize setup..."
