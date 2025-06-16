@@ -1,6 +1,5 @@
 import pytest
 from pathlib import Path
-import pdb
 
 from BFHTW.utils.pdf_reader.read_pdf import ReadPDF
 from BFHTW.utils.logs import get_logger

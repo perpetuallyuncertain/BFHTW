@@ -6,6 +6,8 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 ################################################################################
 echo "Updating system..."
 sudo apt update && sudo apt full-upgrade -y
@@ -36,24 +38,36 @@ sudo apt install -y \
   tree \
   unzip \
   vim \
-  yq \
   docker.io \
   net-tools \
   ufw \
   tmux \
   wget
 
+echo "Installing yq manually..."
+sudo wget https://github.com/mikefarah/yq/releases/download/v4.43.1/yq_linux_amd64 -O /usr/local/bin/yq
+sudo chmod +x /usr/local/bin/yq
+
+###############################################################################
+echo "Enabling and starting Docker..."
+sudo systemctl enable docker
+sudo systemctl start docker
+
 ################################################################################
+echo "Adding user to docker group..."
+sudo usermod -aG docker "$USER"
+echo "You may need to log out and back in (or run 'newgrp docker') to activate Docker group permissions."
+
 echo "Configuring git..."
 git config --global core.autocrlf false
 git config --global core.eol lf
 
 ################################################################################
 echo "Adding users from users.json..."
-if [[ ! -f /tmp/users.json ]]; then
-    echo "/tmp/users.json not found. Skipping user creation."
+if [[ ! -f ${SCRIPT_DIR}/users.json ]]; then
+    echo "${SCRIPT_DIR}/users.json not found. Skipping user creation."
 else
-    jq -c '.[]' /tmp/users.json | while read -r ROW; do
+    jq -c '.[]' ${SCRIPT_DIR}/users.json | while read -r ROW; do
         USERNAME=$(echo "${ROW}" | jq -r '.username')
         echo "Creating or updating user: ${USERNAME}"
 
@@ -93,11 +107,8 @@ echo "Enabling fail2ban..."
 sudo systemctl enable fail2ban --now
 
 ################################################################################
-echo "Starting Qdrant using Docker..."
-sudo docker run -d \
-  --name qdrant \
-  -p 6333:6333 \
-  -v /qdrant_data:/qdrant/storage \
-  qdrant/qdrant
+echo "VM Setup Complete"
 
-sudo docker update --restart=always qd
+echo "Rebooting to finalize setup..."
+sleep 5
+sudo reboot

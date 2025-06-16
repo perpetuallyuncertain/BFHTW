@@ -41,7 +41,7 @@ for ids in text_map.values():
         duplicate_ids.extend(ids[1:])  # keep the first, delete the rest
 
 print(f"Identified {len(duplicate_ids)} duplicate points to delete.")
-import pdb; pdb.set_trace()
+
 # Delete the duplicates
 if duplicate_ids:
     from qdrant_client.models import PointIdsList, PointsSelector

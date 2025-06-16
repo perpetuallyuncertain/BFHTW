@@ -25,7 +25,6 @@ def insert_embeddings(collection_name: str = 'bio_blocks'):
     )
 
     embeddings = processor.output
-    import pdb; pdb.set_trace()
 
     if not embeddings:
         L.warning("No embeddings found to insert.")
