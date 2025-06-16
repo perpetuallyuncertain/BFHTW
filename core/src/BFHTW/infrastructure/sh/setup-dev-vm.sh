@@ -23,6 +23,7 @@ sudo apt install -y \
   build-essential \
   fail2ban \
   git \
+  git-lfs \
   gnupg2 \
   htop \
   jq \
