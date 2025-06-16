@@ -36,7 +36,7 @@ class Fetch_PMID_Mapping:
         Returns a DataFrame of new articles only.
         """
         today_str = datetime.now().strftime("%Y-%m-%d")
-        today_file = self.storage_dir / f"PMC-ids_{today_str}.csv"
+        today_file = self.storage_dir / f"PMC-ids_{today_str}.csv.gz"
 
         # Only download if today's file doesn't already exist
         if not today_file.exists():
@@ -45,10 +45,11 @@ class Fetch_PMID_Mapping:
         else:
             L.info("Today's PMC-ids already exists. Skipping download.")
 
-        today_df = pd.read_csv(today_file)
+        today_df = pd.read_csv(today_file, compression='gzip')
+
 
         # Check for a previous file
-        all_snapshots = sorted(self.storage_dir.glob("PMC-ids_*.csv"))
+        all_snapshots = sorted(self.storage_dir.glob("PMC-ids_*.csv.gz"))
         if len(all_snapshots) < 2:
             L.info("No prior snapshot found. Returning full list.")
             return today_df
@@ -61,10 +62,3 @@ class Fetch_PMID_Mapping:
             new_df = today_df[~today_df["pmid"].isin(prev_df["pmid"])].copy()
             L.info(f"Found {len(new_df)} new articles.")
             return new_df
-
-
-# Run the fetcher if this script is executed directly
-if __name__ == "__main__":
-    fetcher = Fetch_PMID_Mapping()
-    df = fetcher.fetch_new_pmid_mapping()
-    print(df.head())

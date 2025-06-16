@@ -7,7 +7,7 @@ from BFHTW.models.articles.pydantic import PDFMetadata
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
-@pytest.mark.dev
+@pytest.mark.unit
 def test_create_pdf_metadata():
     table = "pdf_metadata"
     model = PDFMetadata

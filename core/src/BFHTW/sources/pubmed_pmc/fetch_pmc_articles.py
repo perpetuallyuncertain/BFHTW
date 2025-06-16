@@ -26,7 +26,7 @@ class FetchPMCArticles:
                 for i, chunk in enumerate(r.iter_content(chunk_size=8192)):
                     if chunk:
                         f.write(chunk)
-                        if i % 50 == 0:  # Only print every 20 chunks
+                        if i % 100 == 0:  # Only print every 100 chunks
                             print(".", end="", flush=True)
                 print(" done.")
 
@@ -61,10 +61,3 @@ class FetchPMCArticles:
             new_df = today_df[~today_df["pmcid"].isin(prev_df["pmcid"])].copy()
             L.info(f"Found {len(new_df)} new articles.")
             return new_df
-
-
-# Run the fetcher if this script is executed directly
-if __name__ == "__main__":
-    fetcher = FetchPMCArticles()
-    df = fetcher.fetch_new_pmc_articles()
-    print(df.head())

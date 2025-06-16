@@ -6,7 +6,7 @@ from BFHTW.utils.logs import get_logger
 
 L = get_logger()
 
-@pytest.mark.dev
+@pytest.mark.unit
 def test_read_pdf():
 
     result = ReadPDF.get_pdf_data(

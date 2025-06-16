@@ -3,7 +3,7 @@ from BFHTW.functions.nlp.processor import nlp_processor
 from BFHTW.models.bio_bert.pydantic import FilterModel
 from BFHTW.models.qdrant.pydantic import QdrantEmbeddingModel
 
-@pytest.mark.dev
+@pytest.mark.unit
 def test_nlp_processor():
 
     source_table = input(f"What is the source table called? ")

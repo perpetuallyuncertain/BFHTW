@@ -6,7 +6,7 @@ from BFHTW.models.articles.pydantic import BaseModel, BlockData
 
 AnyResponseModel = TypeVar("ResponseModel", bound=BaseModel)
 
-@pytest.mark.dev
+@pytest.mark.unit
 def test_get_unprocessed():
         table = input(f"Insert table name: ")
         marker = input(f"Insert marker label: ")

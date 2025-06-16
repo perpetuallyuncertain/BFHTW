@@ -4,7 +4,7 @@ import pandas as pd
 from BFHTW.utils.crud.crud import CRUD
 from BFHTW.models.articles.pydantic import BlockData
 
-@pytest.mark.dev
+@pytest.mark.unit
 def test_fetch():
     table = "pdf_blocks"
     model = BlockData

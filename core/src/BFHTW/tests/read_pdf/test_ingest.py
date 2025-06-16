@@ -8,7 +8,7 @@ L = get_logger()
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
-@pytest.mark.dev
+@pytest.mark.unit
 def test_read_pdf():
 
     pdf_file="test_data/test1.pdf"

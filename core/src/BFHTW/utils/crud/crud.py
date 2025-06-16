@@ -1,7 +1,8 @@
 from typing import Type, List
 from pydantic import BaseModel
-from typing import Any, get_origin, get_args, Annotated
+from typing import Any, Optional, Union, Type, get_origin, get_args, Annotated
 import json
+from sqlite3 import Connection
 
 from BFHTW.utils.db.handler import db_connector
 from BFHTW.utils.logs import get_logger
@@ -43,11 +44,11 @@ class CRUD:
     @staticmethod
     @db_connector
     def get(
-        conn, 
+        conn,
         table: str, 
         model: Type[BaseModel], 
-        id_field: str = None, 
-        id_value: Any = None, 
+        id_field: Optional[str] = None,
+        id_value: Optional[Union[str, int, float, bool]] = None, 
         ALL: bool = False):
         if ALL:
             sql = f"SELECT * FROM {table}"
@@ -66,19 +67,19 @@ class CRUD:
     @db_connector
     def update(
         conn, 
-        table: 
-        str, 
-        model: Type[BaseModel], 
-        id_field: str, 
-        id_value: str, 
-        updates: dict
+        table: str, 
+        model: Type[BaseModel],
+        updates: dict[str, Any], 
+        id_field: Optional[str] = None,
+        id_value: Optional[Union[str, int, float, bool]] = None, 
+        
         ):
         set_clause = ', '.join(f"{k} = ?" for k in updates.keys())
         values = list(updates.values()) + [id_value]
 
         sql = f"UPDATE {table} SET {set_clause} WHERE {id_field} = ?"
         conn.execute(sql, values)
-        return CRUD.get(table, model, id_field, id_value)
+        return CRUD.get(table=table, model=model, id_field=id_field, id_value=id_value)
 
     @staticmethod
     @db_connector
@@ -98,7 +99,7 @@ class CRUD:
         conn, 
         table: str, 
         model: Type[BaseModel], 
-        primary_key: str = None
+        primary_key: Union[str, int]
         ):
 
         fields_sql = []

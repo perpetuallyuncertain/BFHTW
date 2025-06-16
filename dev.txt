@@ -1,0 +1,5 @@
+pytest==8.4.0
+pip-tools==7.4.1
+build==1.2.2.post1
+tomli==2.2.1
+

@@ -1,6 +1,5 @@
 import pandas as pd
-from pathlib import Path
-from datetime import datetime
+from typing import Optional
 
 from BFHTW.utils.logs import get_logger
 from BFHTW.sources.pubmed_pmc.api_client import PMCAPIClient
@@ -28,7 +27,7 @@ class FetchXML:
             L.error(f"Failed to join mapping files: {e}")
             raise
 
-    def match_pmcids_to_ftp_paths(self, pmids: list[str] = None, todays_data: pd.DataFrame = None) -> pd.DataFrame:
+    def match_pmcids_to_ftp_paths(self, pmids: Optional[list[str]] = None, todays_data: Optional[pd.DataFrame] = None) -> pd.DataFrame:
         # Use defaults from instance if not provided
         if pmids is None:
             pmids = self.pmids

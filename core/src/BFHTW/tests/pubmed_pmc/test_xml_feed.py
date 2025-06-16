@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 from BFHTW.sources.pubmed_pmc.fetch_xml_data import FetchXML
 
-@pytest.mark.dev
+@pytest.mark.unit
 def test_xml_feed():
     fetcher = FetchXML()
     matched_articles = fetcher.match_pmcids_to_ftp_paths()
