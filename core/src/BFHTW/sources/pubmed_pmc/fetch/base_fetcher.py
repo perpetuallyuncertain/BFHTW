@@ -30,6 +30,7 @@ class BaseFTPFetcher:
     def _today_str(self) -> str:
         return datetime.now().strftime("%Y-%m-%d")
 
+    def base_dir(self): -> 
     def get_suffix(self) -> str:
         return ".csv.gz" if self.filetype == "csv.gz" else ".csv"
 

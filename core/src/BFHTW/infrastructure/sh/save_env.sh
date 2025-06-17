@@ -65,3 +65,7 @@ fi
 # --- Export the secret ---
 export ${SECRET_NAME}="${SECRET_VALUE}"
 echo "[INFO] Secret loaded: ${SECRET_NAME}=${SECRET_VALUE}"
+
+# --- Set Python Path ---
+export PYTHONPATH="/home/steven/BFHTW/core/src/:$PYTHONPATH"
+echo "[INFO] PYTHONPATH set to: $PYTHONPATH"

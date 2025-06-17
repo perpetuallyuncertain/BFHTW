@@ -1,4 +1,4 @@
-from .base_fetcher import BaseFTPFetcher
+from BFHTW.sources.pubmed_pmc.fetch.base_fetcher import BaseFTPFetcher
 import pandas as pd
 
 class FileListFetcher(BaseFTPFetcher):
