@@ -2,7 +2,7 @@ import tarfile
 import requests
 from pathlib import Path
 from BFHTW.utils.logs import get_logger
-from BFHTW.models.pubmed_pmc.pydantic import PMCArticleMetadata
+from core.src.BFHTW.models.pubmed_pmc import PMCArticleMetadata
 
 L = get_logger()
 

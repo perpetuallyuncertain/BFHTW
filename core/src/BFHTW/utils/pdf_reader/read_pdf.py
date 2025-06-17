@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 from BFHTW.utils.logs import get_logger
-from BFHTW.models.articles.pydantic import BlockData, PDFMetadata
+from core.src.BFHTW.models.pdf_metadata import BlockData, PDFMetadata
 
 L = get_logger()
 #-------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import pytest
 from BFHTW.functions.nlp.processor import nlp_processor
-from BFHTW.models.bio_bert.pydantic import FilterModel
-from BFHTW.models.qdrant.pydantic import QdrantEmbeddingModel
+from core.src.BFHTW.models.keywords import FilterModel
+from core.src.BFHTW.models.qdrant.qdrant import QdrantEmbeddingModel
 
 @pytest.mark.unit
 def test_nlp_processor():

@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 
-from BFHTW.functions.ingestor.ingest_pdf import extraction
+from core.src.BFHTW.ingest.ingest_pdf import extraction
 from BFHTW.utils.logs import get_logger
 
 L = get_logger()

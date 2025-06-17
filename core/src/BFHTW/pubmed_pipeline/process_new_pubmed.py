@@ -1,9 +1,9 @@
 from BFHTW.utils.crud.crud import CRUD
-from BFHTW.models.pubmed_pmc.pydantic import PMCArticleMetadata
+from core.src.BFHTW.models.pubmed_pmc import PMCArticleMetadata
 from BFHTW.sources.pubmed_pmc.process_nxml import FetchPMCFullText
-from BFHTW.functions.ingestor.ingest_pdf import extraction
-from BFHTW.functions.embeddings.insert_embeddings import insert_embeddings
-from BFHTW.functions.keywords.insert_keywords_db import insert_keywords
+from core.src.BFHTW.ingest.ingest_pdf import extraction
+from core.src.BFHTW.ingest.insert_embeddings import insert_embeddings
+from core.src.BFHTW.ingest.insert_keywords_db import insert_keywords
 from BFHTW.utils.logs import get_logger
 
 import shutil

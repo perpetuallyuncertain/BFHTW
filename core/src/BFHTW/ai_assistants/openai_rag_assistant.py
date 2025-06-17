@@ -5,7 +5,6 @@ import json
 import requests
 from datetime import datetime, timedelta
 import time
-from newsapi import NewsApiClient
 import os
 
 class EventHandler(AssistantEventHandler):

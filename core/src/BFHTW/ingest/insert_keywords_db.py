@@ -1,6 +1,6 @@
 from BFHTW.functions.nlp.processor import nlp_processor
 from BFHTW.utils.crud.crud import CRUD
-from BFHTW.models.bio_bert.pydantic import FilterModel
+from core.src.BFHTW.models.keywords import FilterModel
 from BFHTW.utils.logs import get_logger
 
 L = get_logger()

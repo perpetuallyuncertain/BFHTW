@@ -2,7 +2,7 @@ import pandas as pd
 from pandas import DataFrame
 from typing import Optional, Type, List, Literal
 
-from BFHTW.models.articles.pydantic import BaseModel
+from core.src.BFHTW.models.pdf_metadata import BaseModel
 from BFHTW.utils.logs import get_logger
 from BFHTW.utils.crud.crud import CRUD
 

@@ -1,7 +1,7 @@
 from BFHTW.functions.nlp.processor import nlp_processor
 from BFHTW.utils.qdrant.qdrant_crud import QdrantCRUD
 from BFHTW.utils.crud.crud import CRUD
-from BFHTW.models.qdrant.pydantic import QdrantEmbeddingModel
+from core.src.BFHTW.models.qdrant.qdrant import QdrantEmbeddingModel
 from BFHTW.utils.logs import get_logger
 
 from qdrant_client.models import PointStruct
