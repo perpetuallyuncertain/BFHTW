@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 
-from BFHTW.utils.pdf_reader.read_pdf import ReadPDF
+from BFHTW.utils.pdf_.read_pdf import ReadPDF
 from BFHTW.utils.logs import get_logger
 
 L = get_logger()

@@ -2,7 +2,7 @@ import pytest
 from typing import TypeVar
 import pandas as pd
 from BFHTW.utils.db.get_unprocessed import get_unprocessed_blocks
-from BFHTW.models.pdf_metadata import BaseModel, BlockData
+from .BFHTW.models.pdf_extraction import BaseModel, BlockData
 
 AnyResponseModel = TypeVar("ResponseModel", bound=BaseModel)
 

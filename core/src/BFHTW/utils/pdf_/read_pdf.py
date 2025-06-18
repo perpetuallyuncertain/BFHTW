@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 from BFHTW.utils.logs import get_logger
-from BFHTW.models.pdf_metadata import BlockData, PDFMetadata
+from BFHTW.models.pdf_extraction import PDFBlock, PDFMetadata
 
 L = get_logger()
 #-------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ AnyResponseModel = TypeVar('AnyResponseModel', bound=BaseModel)
 
 class PDFExtractionResult(NamedTuple):
     metadata: PDFMetadata
-    blocks: List[BlockData]
+    blocks: List[PDFBlock]
 
 class ReadPDF(Generic[AnyResponseModel]):
     '''Base class for reading PDF files and extracting structured data.'''

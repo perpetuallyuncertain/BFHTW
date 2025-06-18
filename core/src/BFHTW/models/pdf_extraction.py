@@ -1,12 +1,11 @@
-from typing import List, Optional, Tuple, Annotated
+from typing import Optional, Annotated
 from pydantic import BaseModel, Field
 from uuid import uuid4
-from datetime import datetime
 
 #-------------------------------------------------------------------------------
 # BlockData
 
-class BlockData(BaseModel):
+class PDFBlock(BaseModel):
     '''
     Represents a block of text extracted from a document.
 
@@ -141,7 +140,7 @@ class PDFMetadata(BaseModel):
         Field(default_factory=lambda: str(uuid4()), description="Unique document ID")]
 
     format: Annotated[
-        str,
+        Optional[str],
         Field(description="The PDF version and format")
     ]
 

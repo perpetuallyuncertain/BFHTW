@@ -7,7 +7,7 @@ from BFHTW.utils.logs import get_logger
 
 L = get_logger()
 
-ROOT_DIR = Path(__file__).parent.parent.parent
+ROOT_DIR = Path(__file__).parents[2]
 
 
 class PMCAPIClient:

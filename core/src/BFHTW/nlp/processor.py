@@ -1,5 +1,5 @@
-from BFHTW.models.keywords import FilterModel
-from BFHTW.models.pdf_metadata import BaseModel, BlockData
+from BFHTW.models.bio_medical_entity_block import FilterModel
+from BFHTW.models.pdf_extraction import BaseModel, BlockData
 from BFHTW.models.qdrant.qdrant import QdrantEmbeddingModel
 from BFHTW.utils.logs import get_logger
 from BFHTW.utils.db.get_unprocessed import get_unprocessed_blocks

@@ -63,6 +63,7 @@ class BaseFTPFetcher:
         compression = "gzip" if path.suffix == ".gz" else None
         try:
             df = pd.read_csv(path, compression=compression)
+            
             if df.empty:
                 raise ValueError(f"Loaded DataFrame is empty from {path}")
             if self.expected_columns and not set(self.expected_columns).issubset(df.columns):

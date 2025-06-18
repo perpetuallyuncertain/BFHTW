@@ -4,7 +4,7 @@ class PMCIDMappingFetcher(BaseFTPFetcher):
         super().__init__(
             filename_prefix="PMC-ids",
             filetype="csv.gz",
-            expected_columns=["pmid", "pmcid", "doi"]
+            expected_columns=["PMID", "PMCID", "DOI"]
         )
 
     def fetch(self):

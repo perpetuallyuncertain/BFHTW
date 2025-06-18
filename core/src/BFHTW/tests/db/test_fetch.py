@@ -2,8 +2,8 @@ import pytest
 import pandas as pd
 
 from BFHTW.utils.crud.crud import CRUD
-from BFHTW.models.pdf_metadata import BlockData, PDFMetadata
-from BFHTW.models.keywords import FilterModel
+from BFHTW.models.pdf_extraction import PDFBlock, PDFMetadata
+from BFHTW.models.bio_medical_entity_block import FilterModel
 from BFHTW.models.pubmed_pmc import PMCArticleMetadata
 
 @pytest.mark.dev

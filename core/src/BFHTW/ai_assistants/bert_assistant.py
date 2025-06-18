@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, AutoModel, pipeline
 from typing import List, Literal
 from collections import defaultdict
 from pathlib import Path
-from BFHTW.models.keywords import FilterModel
+from BFHTW.models.bio_medical_entity_block import FilterModel
 
 AnyResponseModel = TypeVar('AnyResponseModel', bound=BaseModel)
 

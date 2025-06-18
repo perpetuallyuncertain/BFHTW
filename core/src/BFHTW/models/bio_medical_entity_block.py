@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field, field_serializer
 #-------------------------------------------------------------------------------
 ## Bio Filters
 
-class FilterModel(BaseModel):
+class BiomedicalEntityBlock(BaseModel):
     '''
     Structured model for biological entity filters extracted from a PDF block.
     Used for faceted search and cross-referencing block-level metadata.

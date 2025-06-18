@@ -3,7 +3,7 @@ from _pytest.monkeypatch import MonkeyPatch
 import pandas as pd
 from BFHTW.sources.pubmed_pmc.fetch.fetch_file_list import FileListFetcher
 
-@pytest.mark.live
+@pytest.mark.skip
 def test_fetch_file_list_smoke(tmp_path, monkeypatch: MonkeyPatch):
     fetcher = FileListFetcher()
 
@@ -23,7 +23,7 @@ def test_fetch_file_list_smoke(tmp_path, monkeypatch: MonkeyPatch):
     assert "Accession ID" in df.columns
     assert df["Accession ID"].notnull().all()
 
-@pytest.mark.live
+@pytest.mark.skip
 def test_fetch_new_articles_when_snapshots_exist(tmp_path, monkeypatch: MonkeyPatch):
     fetcher = FileListFetcher()
 
@@ -43,3 +43,5 @@ def test_fetch_new_articles_when_snapshots_exist(tmp_path, monkeypatch: MonkeyPa
     new_df = fetcher.fetch_new_articles()
 
     assert isinstance(new_df, pd.DataFrame)
+
+

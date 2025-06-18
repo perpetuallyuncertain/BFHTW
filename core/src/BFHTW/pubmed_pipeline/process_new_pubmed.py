@@ -1,6 +1,6 @@
 from BFHTW.utils.crud.crud import CRUD
 from BFHTW.models.pubmed_pmc import PMCArticleMetadata
-from BFHTW.sources.pubmed_pmc.process_nxml import FetchPMCFullText
+from BFHTW.sources.pubmed_pmc.pmc_article_downloader import FetchPMCFullText
 from BFHTW.ingest.ingest_pdf import extraction
 from BFHTW.ingest.insert_embeddings import insert_embeddings
 from BFHTW.ingest.insert_keywords_db import insert_keywords
