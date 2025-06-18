@@ -2,9 +2,9 @@ import pytest
 import pandas as pd
 
 from BFHTW.utils.crud.crud import CRUD
-from core.src.BFHTW.models.pdf_metadata import BlockData, PDFMetadata
-from core.src.BFHTW.models.keywords import FilterModel
-from core.src.BFHTW.models.pubmed_pmc import PMCArticleMetadata
+from BFHTW.models.pdf_metadata import BlockData, PDFMetadata
+from BFHTW.models.keywords import FilterModel
+from BFHTW.models.pubmed_pmc import PMCArticleMetadata
 
 @pytest.mark.dev
 def test_fetch():

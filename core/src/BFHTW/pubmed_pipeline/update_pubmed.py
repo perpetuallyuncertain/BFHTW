@@ -1,4 +1,4 @@
-from core.src.BFHTW.models.pubmed_pmc import PMCArticleMetadata
+from BFHTW.models.pubmed_pmc import PMCArticleMetadata
 from BFHTW.utils.crud.crud import CRUD
 from BFHTW.sources.pubmed_pmc.fetch_xml_data import FetchXML
 from BFHTW.utils.logs import get_logger

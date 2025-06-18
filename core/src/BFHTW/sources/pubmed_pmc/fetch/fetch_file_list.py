@@ -23,4 +23,4 @@ class FileListFetcher(BaseFTPFetcher):
         if len(snapshots) < 2:
             return df
         prev_df = self.load_csv(snapshots[-2])
-        return df[~df["pmcid"].isin(prev_df["pmcid"])]
+        return df[~df["Accession ID"].isin(prev_df["Accession ID"])]

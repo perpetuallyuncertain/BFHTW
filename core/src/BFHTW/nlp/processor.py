@@ -1,6 +1,6 @@
-from core.src.BFHTW.models.keywords import FilterModel
-from core.src.BFHTW.models.pdf_metadata import BaseModel, BlockData
-from core.src.BFHTW.models.qdrant.qdrant import QdrantEmbeddingModel
+from BFHTW.models.keywords import FilterModel
+from BFHTW.models.pdf_metadata import BaseModel, BlockData
+from BFHTW.models.qdrant.qdrant import QdrantEmbeddingModel
 from BFHTW.utils.logs import get_logger
 from BFHTW.utils.db.get_unprocessed import get_unprocessed_blocks
 from BFHTW.utils.db.handler import db_connector

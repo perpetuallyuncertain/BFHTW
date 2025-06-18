@@ -1,32 +1,45 @@
 import pytest
+from _pytest.monkeypatch import MonkeyPatch
+import pandas as pd
 from BFHTW.sources.pubmed_pmc.fetch.fetch_file_list import FileListFetcher
 
 @pytest.mark.live
-def test_fetch_file_list_smoke(tmp_path):
+def test_fetch_file_list_smoke(tmp_path, monkeypatch: MonkeyPatch):
     fetcher = FileListFetcher()
-    
-    # Monkeypatch fetcher's internal cache dir to tmp_path
-    fetcher.ROOT_DIR = tmp_path
-    fetcher.ensure_base_dir()
+
+    # Monkeypatch base_dir property
+    monkeypatch.setattr(
+        fetcher.__class__,
+        "base_dir",
+        property(lambda self: tmp_path)
+    )
+
+    # Reinitialize storage_dir to use new base_dir
+    fetcher.storage_dir = fetcher._make_storage_dir("data")
 
     df = fetcher.fetch()
 
-    # Basic shape/sanity checks
     assert not df.empty
-    assert "pmcid" in df.columns
-    assert df["pmcid"].notnull().all()
+    assert "Accession ID" in df.columns
+    assert df["Accession ID"].notnull().all()
 
 @pytest.mark.live
-def test_fetch_new_articles_when_snapshots_exist(tmp_path):
+def test_fetch_new_articles_when_snapshots_exist(tmp_path, monkeypatch: MonkeyPatch):
     fetcher = FileListFetcher()
-    fetcher.ROOT_DIR = tmp_path
-    fetcher.en()
 
-    # Force one snapshot to exist
+    monkeypatch.setattr(
+        fetcher.__class__,
+        "base_dir",
+        property(lambda self: tmp_path)
+    )
+    fetcher.storage_dir = fetcher._make_storage_dir("data")
+
+    # First fetch = snapshot
     df = fetcher.fetch()
     snapshot_path = fetcher.get_latest_path()
-    snapshot_path.write_text(df.to_csv(index=False))  # simulate prior snapshot
+    snapshot_path.write_text(df.to_csv(index=False))
 
+    # Now call fetch_new_articles()
     new_df = fetcher.fetch_new_articles()
 
     assert isinstance(new_df, pd.DataFrame)

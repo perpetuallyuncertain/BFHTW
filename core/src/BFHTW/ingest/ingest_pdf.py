@@ -1,6 +1,6 @@
 from pathlib import Path
 from BFHTW.utils.pdf_reader.read_pdf import ReadPDF
-from core.src.BFHTW.models.pdf_metadata import PDFMetadata, BlockData
+from BFHTW.models.pdf_metadata import PDFMetadata, BlockData
 from BFHTW.utils.crud.crud import CRUD
 from BFHTW.utils.logs import get_logger
 from typing import Tuple

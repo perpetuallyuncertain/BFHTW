@@ -1,4 +1,4 @@
-from core.src.BFHTW.models.pdf_metadata import PDFMetadata
+from BFHTW.models.pdf_metadata import PDFMetadata
 
 class ResponseModel(PDFMetadata):
     @classmethod
