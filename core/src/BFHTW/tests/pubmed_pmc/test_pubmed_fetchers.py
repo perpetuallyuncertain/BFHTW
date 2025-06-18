@@ -6,7 +6,7 @@ def test_fetch_file_list_smoke(tmp_path):
     fetcher = FileListFetcher()
     
     # Monkeypatch fetcher's internal cache dir to tmp_path
-    fetcher. = tmp_path
+    fetcher.ROOT_DIR = tmp_path
     fetcher.ensure_base_dir()
 
     df = fetcher.fetch()
@@ -19,8 +19,8 @@ def test_fetch_file_list_smoke(tmp_path):
 @pytest.mark.live
 def test_fetch_new_articles_when_snapshots_exist(tmp_path):
     fetcher = FileListFetcher()
-    fetcher.base_dir = tmp_path
-    fetcher.ensure_base_dir()
+    fetcher.ROOT_DIR = tmp_path
+    fetcher.en()
 
     # Force one snapshot to exist
     df = fetcher.fetch()

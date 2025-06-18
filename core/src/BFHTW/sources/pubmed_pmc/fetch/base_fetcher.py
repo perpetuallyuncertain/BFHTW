@@ -12,25 +12,29 @@ class BaseFTPFetcher:
         filename_prefix: str,
         storage_subdir: str = "data",
         filetype: str = "csv",  # or "csv.gz"
-        expected_columns: Optional[list|str] = None
+        expected_columns: Optional[list|str] = None,
+        test_base_dir: Optional[Path] = None
     ):
         from BFHTW.utils.logs import get_logger
         self.L = get_logger()
         self.filename_prefix = filename_prefix
         self.filetype = filetype
         self.expected_columns = expected_columns or []
+        self.ROOT_DIR = test_base_dir or self.base_dir
         self.storage_dir = self._make_storage_dir(storage_subdir)
 
     def _make_storage_dir(self, subdir: str) -> Path:
-        ROOT_DIR = Path(__file__).resolve().parents[3]
-        storage_path = ROOT_DIR / "sources" / "pubmed_pmc" / subdir
+        storage_path = self.ROOT_DIR / "sources" / "pubmed_pmc" / subdir
         storage_path.mkdir(parents=True, exist_ok=True)
         return storage_path
 
     def _today_str(self) -> str:
         return datetime.now().strftime("%Y-%m-%d")
 
-    def base_dir(self): -> 
+    @property
+    def base_dir(self) -> Path:
+        return Path(__file__).resolve().parents[3]
+    
     def get_suffix(self) -> str:
         return ".csv.gz" if self.filetype == "csv.gz" else ".csv"
 
