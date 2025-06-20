@@ -118,7 +118,12 @@ class CRUD:
 
     @staticmethod
     @db_connector
-    def bulk_insert(conn, table: str, model: Type[BaseModel], data_list: List[BaseModel]):
+    def bulk_insert(
+        conn,
+        table: str,
+        model: Type[BaseModel],
+        data_list: List[BaseModel]
+        ):
         if not data_list:
             return f"No data to insert into {table}"
 

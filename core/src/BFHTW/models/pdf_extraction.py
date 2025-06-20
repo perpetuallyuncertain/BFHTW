@@ -174,12 +174,12 @@ class PDFMetadata(BaseModel):
         Field(default=None, description="PDF producer software")
     ]
 
-    creationDate: Annotated[
+    creation_date: Annotated[
         Optional[str],
         Field(default=None, description="Original creation date in PDF datetime format (e.g., D:YYYYMMDDHHMMSS+TZ)")
     ]
 
-    modDate: Annotated[
+    modification_date: Annotated[
         Optional[str],
         Field(default=None, description="Last modified date in PDF datetime format")
     ]

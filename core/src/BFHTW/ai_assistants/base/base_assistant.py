@@ -7,7 +7,7 @@ Intended to be subclassed by specific assistant implementations.
 
 import os
 from pydantic import BaseModel
-from typing import TypeVar, Generic, Type
+from typing import TypeVar, Generic, Type, Optional
 
 from BFHTW.utils.logs import get_logger
 L = get_logger()
@@ -30,14 +30,14 @@ class BaseAIAssistant(Generic[AnyResponseModel]):
         sys_content: str,
         response_model: Type[AnyResponseModel] ):
         self.name = name
-        self.sys_content = sys_content
+        self.sys_content: Optional[str | None] = sys_content
         self.response_model = response_model
 
     @classmethod
     def from_file(cls,
         name: str,
         prompt_path: str,
-        response_model: Type[AnyResponseModel] ) -> 'BaseAIAssistant[AnyResponseModel]':
+        response_model: Type[AnyResponseModel] ) -> Optional['BaseAIAssistant[AnyResponseModel]']:
         '''Create an assistant using a system prompt loaded from a file'''
         if not os.path.exists(prompt_path):
             L.error(f'Could not locate prompt at: "{prompt_path}"')
@@ -46,7 +46,7 @@ class BaseAIAssistant(Generic[AnyResponseModel]):
             return cls(name, f.read(), response_model)
 
     @staticmethod
-    def safe_load_prompt(search_path: str, raw_prompt_path: str) -> str:
+    def safe_load_prompt(search_path: str, raw_prompt_path: str) -> Optional[str]:
         '''Safely load a prompt file, resolving the path in dynamic environments.
 
         In Azure Functions and similar environments, the current working directory
@@ -66,9 +66,10 @@ class BaseAIAssistant(Generic[AnyResponseModel]):
         '''Load and return the default system prompt using the standard filename.'''
         sys_content = BaseAIAssistant.safe_load_prompt(
             search_path,
-            DEFAULT_PROMPT_FILENAME )
+            DEFAULT_PROMPT_FILENAME
+        )
         if sys_content is None:
-            L.error('Could not load default system prompt')
+            raise ValueError('Could not load default system prompt')
         return sys_content
 
     @staticmethod

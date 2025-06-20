@@ -9,7 +9,7 @@ class PMCArticleMetadata(BaseModel):
     between open-access archive files and PubMed/PMC identifiers.
     """
 
-    file_path: Annotated[
+    ftp_path: Annotated[
         str,
         Field(description="Relative FTP path to the article tar.gz file from the PMC FTP site.")
     ]
@@ -24,7 +24,7 @@ class PMCArticleMetadata(BaseModel):
         Field(description="PMID as found in the source oa_file_list file.")
     ]
 
-    license: Annotated[
+    license_type: Annotated[
         Optional[str],
         Field(description="License designation for the full-text article (e.g., CC BY, NO-CC CODE).")
     ]
@@ -39,7 +39,7 @@ class PMCArticleMetadata(BaseModel):
         Field(description="PMID as mapped from the external PMC-ID CSV mapping file.")
     ]
 
-    pubmed_processed: Annotated[
+    full_text_downloaded: Annotated[
         bool,
         Field(
             default=False,

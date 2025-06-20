@@ -13,7 +13,7 @@ class TarballFetcher:
         self.base_dir = base_dir
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
-    def download(self, url: str, target_path: Path) -> None:
+    def download(self, url: str, target_path: Path) -> Path:
         """Download a tar.gz file from a URL."""
         L.info(f"Downloading: {url}")
         response = requests.get(url, stream=True, timeout=60)
@@ -27,6 +27,7 @@ class TarballFetcher:
                         L.debug(f"Downloaded ~{i * 8192} bytes...")
 
         L.info(f"Saved to: {target_path}")
+        return target_path
 
     def extract(self, tar_path: Path, extract_to: Path) -> None:
         """Extract all contents of a tar.gz file."""

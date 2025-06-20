@@ -2,43 +2,39 @@
 
 import json
 from collections import defaultdict
-from typing import List
+from typing import TypedDict
 from pathlib import Path
 from transformers.pipelines import pipeline
-from BFHTW.models.bio_medical_entity_block import FilterModel
+from BFHTW.models.bio_medical_entity_block import BiomedicalEntityBlock
+from BFHTW.ai_assistants.base.base_local_assistant import BaseLocalAssistant
 
-ROOT_DIR = Path(__file__).resolve().parents[3]  # same depth as before
+DEFAULT_LABEL_MAP = Path(__file__).parent / 'label_map.json'
 
-class BioBERTNER:
-    def __init__(self, model_name: str = "d4data/biomedical-ner-all"):
-        self.model_name = model_name
-        self.pipe = pipeline(
-            "token-classification",
-            model=self.model_name,
+class BioBERTNER(BaseLocalAssistant[BiomedicalEntityBlock]):
+    def __init__(self, model_name: str = "d4data/biomedical-ner-all", label_map_path: Path = DEFAULT_LABEL_MAP):
+        super().__init__(
+            name="BioBERT-NER",
+            model_name=model_name,
+            pipeline_type="token-classification",
+            response_model=BiomedicalEntityBlock,
             aggregation_strategy="simple"
         )
+        self.label_map = json.load(label_map_path.open())
 
-    def extract_keywords(
-        self,
-        text: str,
-        label_map_filename: str,
-        block_id: str,
-        doc_id: str
-    ) -> FilterModel:
-        label_map_path = ROOT_DIR / 'models' / 'bio_bert' / label_map_filename
-        with open(label_map_path, 'r') as f:
-            label_map = json.load(f)
-
+    def run(self, text: str, *, block_id: str, doc_id: str) -> BiomedicalEntityBlock: # type: ignore[override]
         entities = self.pipe(text)
         categories = defaultdict(list)
-        for ent in entities:
-            key = label_map.get(ent["entity_group"], "other")
-            categories[key].append(ent["word"])
 
-        model_fields = FilterModel.model_fields.keys()
-        filtered = {k: v for k, v in categories.items() if k in model_fields}
-        
-        return FilterModel(
+        for ent in entities:
+            label = ent.get("entity_group")
+            value = ent.get("word")
+            key = self.label_map.get(label, "other")
+            categories[key].append(value)
+
+        valid_fields = BiomedicalEntityBlock.model_fields.keys()
+        filtered = {k: v for k, v in categories.items() if k in valid_fields}
+
+        return BiomedicalEntityBlock(
             block_id=block_id,
             doc_id=doc_id,
             embeddings=False,
