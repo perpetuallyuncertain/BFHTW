@@ -1,3 +1,0 @@
-core/src/BFHTW/data/** filter=lfs diff=lfs merge=lfs -text
-qdrant_storage/** filter=lfs diff=lfs merge=lfs -text
-core/qdrant_storage/** filter=lfs diff=lfs merge=lfs -text
