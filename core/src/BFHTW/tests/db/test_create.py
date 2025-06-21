@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 
 from BFHTW.utils.crud.crud import CRUD
-from BFHTW.models.articles.pydantic import PDFMetadata
+from .BFHTW.models.pdf_extraction import PDFMetadata
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 

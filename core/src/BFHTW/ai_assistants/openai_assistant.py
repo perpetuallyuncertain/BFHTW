@@ -14,7 +14,7 @@ import os
 import time
 from typing import Optional, Type
 
-from BFHTW.ai_assistants.base_assistant import BaseAIAssistant, AnyResponseModel
+from BFHTW.ai_assistants.base.base_assistant import BaseAIAssistant, AnyResponseModel
 from BFHTW.utils.logs import get_logger
 L = get_logger()
 

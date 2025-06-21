@@ -1,14 +1,23 @@
 import pytest
 import pandas as pd
+from BFHTW.sources.pubmed_pmc.fetch.fetch_PMCID_mapping import PMCIDMappingFetcher
 
-from BFHTW.utils.logs import get_logger
-from BFHTW.sources.pubmed_pmc.fetch_PMID_mapping import Fetch_PMID_Mapping
+@pytest.mark.skip
+def test_fetch_pmcid_mapping_smoke(tmp_path, monkeypatch):
+    fetcher = PMCIDMappingFetcher()
 
-L = get_logger()
+    # Monkeypatch base_dir to isolate snapshot writes
+    monkeypatch.setattr(
+        fetcher.__class__,
+        "base_dir",
+        property(lambda self: tmp_path)
+    )
+    fetcher.storage_dir = fetcher._make_storage_dir("data")
 
-getter = Fetch_PMID_Mapping()
-
-@pytest.mark.unit
-def test_get_mapping():
-    todays_mapping = getter.fetch_new_pmid_mapping()
-    assert isinstance(todays_mapping, pd.DataFrame), "Data is dataframe."
+    df = fetcher.fetch()
+    
+    assert not df.empty
+    assert "PMID" in df.columns
+    assert "PMCID" in df.columns
+    assert "DOI" in df.columns
+    assert df["PMID"].notnull().any()

@@ -1,5 +1,6 @@
 from qdrant_client import QdrantClient
 from collections import defaultdict
+from qdrant_client.models import PointIdsList
 
 # Connect to Qdrant
 client = QdrantClient("http://localhost:6333")
@@ -42,18 +43,8 @@ for ids in text_map.values():
 
 print(f"Identified {len(duplicate_ids)} duplicate points to delete.")
 
-# Delete the duplicates
-if duplicate_ids:
-    from qdrant_client.models import PointIdsList, PointsSelector
-
-    points_to_delete = ["abc", "def", "ghi"]  # your duplicate point IDs
-
-    client.delete(
-        collection_name="bio_blocks",
-        points_selector=PointsSelector(
-            points=PointIdsList(points=points_to_delete)
-        )
-    )
-    print("Duplicates deleted.")
-else:
-    print("No duplicates found.")
+client.delete(
+    collection_name="bio_blocks",
+    points_selector=PointIdsList(points=duplicate_ids),
+    wait=True
+)
