@@ -1,7 +1,4 @@
 import pandas as pd
-from pathlib import Path
-from typing import Optional
-from datetime import datetime
 from BFHTW.utils.crud.crud import CRUD
 from BFHTW.utils.logs import get_logger
 
