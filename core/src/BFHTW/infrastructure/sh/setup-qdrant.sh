@@ -4,7 +4,7 @@ set -e
 
 # === Setup Paths ===
 SCRIPT_DIR="$(cd "$(dirname "${0}")" && pwd)"
-PROJECT_ROOT="$(realpath "$SCRIPT_DIR/../../../..")"
+PROJECT_ROOT="$(realpath "$SCRIPT_DIR/../../../../..")"
 STORAGE_DIR="$PROJECT_ROOT/core/qdrant_storage"
 
 echo "Creating storage directory for Qdrant at: $STORAGE_DIR"
