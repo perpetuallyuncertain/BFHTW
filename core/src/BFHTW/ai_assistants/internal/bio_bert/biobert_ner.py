@@ -2,13 +2,14 @@
 
 import json
 from collections import defaultdict
-from typing import TypedDict
 from pathlib import Path
-from transformers.pipelines import pipeline
+from transformers import AutoTokenizer
 from BFHTW.models.bio_medical_entity_block import BiomedicalEntityBlock
 from BFHTW.ai_assistants.base.base_local_assistant import BaseLocalAssistant
 
 DEFAULT_LABEL_MAP = Path(__file__).parent / 'label_map.json'
+
+MAX_TOKENS = 512
 
 class BioBERTNER(BaseLocalAssistant[BiomedicalEntityBlock]):
     def __init__(self, model_name: str = "d4data/biomedical-ner-all", label_map_path: Path = DEFAULT_LABEL_MAP):
@@ -20,6 +21,18 @@ class BioBERTNER(BaseLocalAssistant[BiomedicalEntityBlock]):
             aggregation_strategy="simple"
         )
         self.label_map = json.load(label_map_path.open())
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    def _chunk_text(self, text: str, max_tokens: int = MAX_TOKENS) -> list[str]:
+        tokens = self.tokenizer.tokenize(text)
+        chunks = []
+        start = 0
+        while start < len(tokens):
+            end = min(start + max_tokens, len(tokens))
+            chunk = self.tokenizer.convert_tokens_to_string(tokens[start:end])
+            chunks.append(chunk)
+            start = end
+        return chunks
 
     def run(self, text: str, *, block_id: str, doc_id: str) -> BiomedicalEntityBlock: # type: ignore[override]
         entities = self.pipe(text)

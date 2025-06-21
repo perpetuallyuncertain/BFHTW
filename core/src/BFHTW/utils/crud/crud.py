@@ -2,9 +2,8 @@ from typing import Type, List
 from pydantic import BaseModel
 from typing import Any, Optional, Union, Type, get_origin, get_args, Annotated
 import json
-from sqlite3 import Connection
 
-from BFHTW.utils.db.handler import db_connector
+from BFHTW.utils.db.sql_connection_wrapper import db_connector
 from BFHTW.utils.logs import get_logger
 
 L = get_logger()

@@ -12,6 +12,8 @@ from BFHTW.utils.qdrant.qdrant_crud import QdrantCRUD
 import shutil
 from pathlib import Path
 from urllib.parse import urljoin
+from qdrant_client.models import PointStruct
+
 
 L = get_logger()
 
@@ -27,9 +29,9 @@ if not unprocessed_paths:
     L.info("No unprocessed files left.")
     exit()
 
-path_info = unprocessed_paths[0]
+path_info = unprocessed_paths[100]
 
-base_dir = Path(__file__).parents[2]
+base_dir = Path(__file__).parents[1]
 
 # Step 2: Create temp dir (use pmcid for a clean folder name)
 temp_root = base_dir / 'sources' / 'pubmed_pmc' / 'temp'
@@ -55,6 +57,15 @@ if not pdf_path:
     L.warning(f"No PDF found for {path_info.doc_id} in {tarball_path}")
     shutil.rmtree(doc_temp_dir)
     exit()
+else:
+    # Mark article as downloaded
+    CRUD.update(
+    table='pubmed_fulltext_links',
+    model=PMCArticleMetadata,
+    updates={"full_text_downloaded": True},
+    id_field='ftp_path',
+    id_value=path_info.ftp_path
+)
 
 # Step 6: Extract metadata
 meta_reader = PDFReadMeta()
@@ -82,10 +93,11 @@ CRUD.bulk_insert(
 
 # Step 9: Named Entity Recognition
 ner = BioBERTNER()
-keywords = [
-    ner.run(text=block.text, doc_id=block.doc_id, block_id=block.block_id)
-    for block in text_blocks
-]
+keywords = []
+for block in text_blocks:
+    result = ner.run(text=block.text, doc_id=block.doc_id, block_id=block.block_id)
+    keywords.append(result)
+   
 
 # Step 10: Embedding generation
 embedder = BioBERTEmbedder()
@@ -97,29 +109,38 @@ embeddings = [
 # Step 11: Save NER and embeddings
 if keywords:
     CRUD.bulk_insert(
-        table='biobert_ner_results',
+        table='keywords',
         model=type(keywords[0]),
         data_list=keywords
     )
 
-if embeddings:
-    qdrant_client = QdrantCRUD()
-    qdrant_client.upsert_embeddings_bulk(
-        points=[embedding.model_dump() for embedding in embeddings]
-    )
-    L.info(f"Inserted {len(embeddings)} embeddings into Qdrant for doc {pdf_metadata.doc_id}")
+    if embeddings:
+        qdrant_client = QdrantCRUD(collection_name='bio_blocks')
+        qdrant_client.upsert_embeddings_bulk(
+            points=[
+                PointStruct(
+                    id=embedding.block_id,
+                    vector=embedding.embedding,
+                    payload={
+                        "doc_id": embedding.doc_id,
+                        "page": embedding.page,
+                        "text": embedding.text,
+                    }
+                )
+                for embedding in embeddings
+            ]
+        )
+        L.info(f"Inserted {len(embeddings)} embeddings into Qdrant for doc {pdf_metadata.doc_id}")
 
 
 # Step 12: Cleanup
 shutil.rmtree(doc_temp_dir)
 
-# Step 13: Mark as processed
-CRUD.update(
-    table='pubmed_fulltext_links',
-    model=PMCArticleMetadata,
-    updates={"full_text_downloaded": True},
+# Step 13: Mark block as processed
+CRUD.bulk_update(
+    table='pdf_blocks',
     id_field='block_id',
-    id_value=path_info.block_id
+    data_list=[(embedding.block_id, {"processed": True}) for embedding in embeddings]
 )
 
-L.info(f"Successfully processed and cleaned up {path_info.block_id}")
+L.info(f"Successfully processed and cleaned up {path_info.ftp_path}")
