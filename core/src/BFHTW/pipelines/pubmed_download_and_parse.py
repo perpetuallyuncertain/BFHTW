@@ -6,7 +6,7 @@ from BFHTW.ai_assistants.internal.bio_bert.biobert_ner import BioBERTNER
 from BFHTW.ai_assistants.internal.bio_bert.biobert_embeddings import BioBERTEmbedder
 from BFHTW.utils.pdf.pdf_metadata import PDFReadMeta
 from BFHTW.utils.pdf.pdf_block_extractor import PDFBlockExtractor
-from BFHTW.models.pdf_extraction import PDFMetadata, PDFBlock
+from BFHTW.models.pdf_models import PDFMetadata, PDFBlock
 from BFHTW.utils.qdrant.qdrant_crud import QdrantCRUD
 
 import shutil
@@ -49,16 +49,7 @@ for path in unprocessed_paths[:5]:
     fetcher = TarballFetcher(base_dir)
     tarball_path = fetcher.download(full_url, target_path=tarball_file_path)
 
-    # Step 4: Extract contents
-    extracted_path = fetcher.extract(tarball_path, extract_to=doc_temp_dir)
-
-    # Step 5: Locate PDF
-    pdf_path = next(doc_temp_dir.rglob("*.pdf"), None)
-    if not pdf_path:
-        L.warning(f"No PDF found for {path_info.ftp_path} in {tarball_path}")
-        shutil.rmtree(doc_temp_dir)
-        exit()
-    else:
+    if tarball_path:
         # Mark article as downloaded
         CRUD.update(
         table='pubmed_fulltext_links',
@@ -67,18 +58,48 @@ for path in unprocessed_paths[:5]:
         id_field='ftp_path',
         id_value=path_info.ftp_path
     )
+    
+    import pdb; pdb.set_trace()
 
-    # Step 6: Extract metadata
-    meta_reader = PDFReadMeta()
-    pdf_metadata = meta_reader.extract_metadata(pdf_path=pdf_path)
+    # Step 4: Extract contents
+    extracted_path = fetcher.extract(tarball_path, extract_to=doc_temp_dir)
 
-    if not pdf_metadata:
-        raise ValueError("Failed to extract metadata from PDF")
+    # Step 5: Locate PDF or NXML
+    pdf_path = next(doc_temp_dir.rglob("*.pdf"), None)
+    nxml_path = next(doc_temp_dir.rglob("*.nxml"), None)
 
-    # Step 7: Extract blocks
-    block_extractor = PDFBlockExtractor()
-    text_blocks = block_extractor.extract_blocks(doc_id=pdf_metadata.doc_id, pdf_path=pdf_path)
+    if not pdf_path and not nxml_path:
+        L.warning(f"No PDF or NXML found for {path_info.ftp_path} in {tarball_path}")
+        CRUD.update(
+            table='pubmed_fulltext_links',
+            model=PMCArticleMetadata,
+            updates={"full_text_downloaded": True},
+            id_field='ftp_path',
+            id_value=path_info.ftp_path
+        )
+        shutil.rmtree(doc_temp_dir)
+        continue
 
+    # Step 6: PDF-only branch for now
+    if pdf_path:
+        # Safe: we *do* have a PDF path, so now do the PDF logic
+        meta_reader = PDFReadMeta()
+        pdf_metadata = meta_reader.extract_metadata(pdf_path=pdf_path)
+
+        block_extractor = PDFBlockExtractor()
+        text_blocks = block_extractor.extract_blocks(doc_id=pdf_metadata.doc_id, pdf_path=pdf_path)
+
+        if not text_blocks:
+            L.warning(f"No text blocks extracted for {pdf_metadata.doc_id} — skipping.")
+            shutil.rmtree(doc_temp_dir)
+            continue
+    else:
+        # No PDF, and we haven't implemented NXML support yet
+        L.warning(f"No PDF available for {path_info.pmcid} — skipping until NXML support is added.")
+        shutil.rmtree(doc_temp_dir)
+        continue
+
+        
     # Step 8: Insert metadata and blocks
     CRUD.insert(
         table='pdf_metadata',

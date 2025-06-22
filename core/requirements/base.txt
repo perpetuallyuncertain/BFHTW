@@ -15,3 +15,4 @@ pydantic==2.11.4
 sqlmodel==0.0.24
 trafilatura==2.0.0
 typer==0.16.0
+qdrant-client==1.14.3

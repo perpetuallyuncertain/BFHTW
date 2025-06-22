@@ -98,8 +98,9 @@ class CRUD:
         conn, 
         table: str, 
         model: Type[BaseModel], 
-        primary_key: Union[str, int]
-        ):
+        primary_key: Union[str, int],
+        unique_fields: Optional[List[str]] = None
+    ):
 
         fields_sql = []
         for name, field in model.model_fields.items():
@@ -110,7 +111,17 @@ class CRUD:
                 line += " PRIMARY KEY"
             fields_sql.append(line)
 
-        create_sql = f"CREATE TABLE IF NOT EXISTS {table} (\n  " + ",\n  ".join(fields_sql) + "\n);"
+        constraint_clause = ""
+        if unique_fields:
+            constraint_clause = f",\n  UNIQUE ({', '.join(unique_fields)})"
+
+        create_sql = (
+            f"CREATE TABLE IF NOT EXISTS {table} (\n  "
+            + ",\n  ".join(fields_sql)
+            + constraint_clause
+            + "\n);"
+        )
+
         conn.execute(create_sql)
         L.info(f"Table '{table}' created or already exists.")
         return True

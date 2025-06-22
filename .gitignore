@@ -22,4 +22,4 @@ core/src/BFHTW/sources/pubmed_pmc/temp
 core/src/BFHTW/test_data
 
 # Qdrant data
-core/src/BFHTW/Qdrant
+core/qdrant_storage
