@@ -60,8 +60,6 @@ class CRUD:
 
         return [model(**dict(row)) for row in rows] if rows else []
 
-
-
     @staticmethod
     @db_connector
     def update(

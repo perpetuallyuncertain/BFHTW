@@ -14,7 +14,7 @@ from typing import List
 from datetime import datetime
 
 from BFHTW.utils.logs import get_logger
-from BFHTW.models.pdf_extraction import PDFBlock
+from BFHTW.models.pdf_models import PDFBlock
 
 L = get_logger()
 

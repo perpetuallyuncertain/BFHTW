@@ -1,0 +1,885 @@
+<article xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article">
+  <?properties open_access?>
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">Arthritis Res</journal-id>
+      <journal-title>Arthritis Research</journal-title>
+      <issn pub-type="ppub">1465-9905</issn>
+      <issn pub-type="epub">1465-9913</issn>
+      <publisher>
+        <publisher-name>BioMed Central</publisher-name>
+        <publisher-loc>London</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="pmid">11056674</article-id>
+      <article-id pub-id-type="pmc">17816</article-id>
+      <article-id pub-id-type="publisher-id">ar-2-5-399</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Primary Research</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>The role of X-chromosome inactivation in female predisposition to autoimmunity</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib id="A1" contrib-type="author">
+          <name>
+            <surname>Chitnis</surname>
+            <given-names>Smita</given-names>
+          </name>
+          <xref ref-type="aff" rid="I1">1</xref>
+          <email>peterg@nshs.edu</email>
+        </contrib>
+        <contrib id="A2" contrib-type="author">
+          <name>
+            <surname>Monteiro</surname>
+            <given-names>Joanita</given-names>
+          </name>
+          <xref ref-type="aff" rid="I1">1</xref>
+        </contrib>
+        <contrib id="A3" contrib-type="author">
+          <name>
+            <surname>Glass</surname>
+            <given-names>David</given-names>
+          </name>
+          <xref ref-type="aff" rid="I2">2</xref>
+        </contrib>
+        <contrib id="A4" contrib-type="author">
+          <name>
+            <surname>Apatoff</surname>
+            <given-names>Brian</given-names>
+          </name>
+          <xref ref-type="aff" rid="I3">3</xref>
+        </contrib>
+        <contrib id="A5" contrib-type="author">
+          <name>
+            <surname>Salmon</surname>
+            <given-names>Jane</given-names>
+          </name>
+          <xref ref-type="aff" rid="I4">4</xref>
+        </contrib>
+        <contrib id="A6" contrib-type="author">
+          <name>
+            <surname>Concannon</surname>
+            <given-names>Patrick</given-names>
+          </name>
+          <xref ref-type="aff" rid="I5">5</xref>
+        </contrib>
+        <contrib id="A7" contrib-type="author">
+          <name>
+            <surname>Gregersen</surname>
+            <given-names>Peter K</given-names>
+          </name>
+          <xref ref-type="aff" rid="I1">1</xref>
+        </contrib>
+      </contrib-group>
+      <aff id="I1"><label>1</label>North Shore University Hospital, Manhasset, New York, USA.</aff>
+      <aff id="I2"><label>2</label>Children's Hospital Medical Center, and University of Cincinnati College of Medicine, Cincinnati, Ohio, USA.</aff>
+      <aff id="I3"><label>3</label>New York Hospital/Cornell University Medical Center, New York, USA.</aff>
+      <aff id="I4"><label>4</label>Weill Medical College of Cornell University and Hospital for Special Surgery, New York, USA.</aff>
+      <aff id="I5"><label>5</label>Virginia Mason Research Center, Seattle, Washington, USA.</aff>
+      <pub-date pub-type="ppub">
+        <year>2000</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>3</day>
+        <month>7</month>
+        <year>2000</year>
+      </pub-date>
+      <volume>2</volume>
+      <issue>5</issue>
+      <fpage>399</fpage>
+      <lpage>406</lpage>
+      <ext-link ext-link-type="uri" xlink:href="http://arthritis-research.com/content/2/5/399"/>
+      <history>
+        <date date-type="received">
+          <day>26</day>
+          <month>4</month>
+          <year>2000</year>
+        </date>
+        <date date-type="rev-request">
+          <day>6</day>
+          <month>6</month>
+          <year>2000</year>
+        </date>
+        <date date-type="rev-recd">
+          <day>12</day>
+          <month>6</month>
+          <year>2000</year>
+        </date>
+        <date date-type="accepted">
+          <day>13</day>
+          <month>6</month>
+          <year>2000</year>
+        </date>
+      </history>
+      <copyright-statement>Copyright © 2000 Current Science Ltd</copyright-statement>
+      <abstract abstract-type="short">
+        <p>We propose that the phenomenon of X-chromosome inactivation in females may constitute a risk factor for loss of T-cell tolerance; specifically that skewed X-chromosome inactivation in the thymus may lead to inadequate thymic deletion. Using a DNA methylation assay, we have examined the X-chromosome inactivation patterns in peripheral blood from normal females (<italic>n</italic> = 30), female patients with a variety of autoimmune diseases (<italic>n</italic> = 167). No differences between patients and controls were observed. However, locally skewed X-chromsome inactivation may exist in the thymus, and therefore the underlying hypothesis remains to be disproved.</p>
+      </abstract>
+      <abstract>
+        <sec>
+          <title>Introduction:</title>
+          <p>A reduction in the sex ratio (male : female) is characteristic of most autoimmune disorders. The increased prevalence in females ranges from a modest 2:1 for multiple sclerosis [<xref ref-type="bibr" rid="B1">1</xref>], to approximately 10:1 for systemic lupus erythematosus [<xref ref-type="bibr" rid="B2">2</xref>]. This tendency toward autoimmunity in females is often ascribed to hormonal differences, because in a number of experimental disease models estrogens exacerbated disease, and androgens can inhibit disease activity [<xref ref-type="bibr" rid="B3">3</xref>,<xref ref-type="bibr" rid="B4">4</xref>]. However, human studies have failed to demonstrate a clear-cut influence of hormonal environment on disease susceptibility to lupus or other autoimmune disorders. In addition, many childhood forms of autoimmunity, such as juvenile rheumatoid arthritis, exhibit female predominance [<xref ref-type="bibr" rid="B5">5</xref>]. Interestingly, juvenile (type 1) diabetes is an exception to this general trend, with a sex ratio close to 1 in most studies [<xref ref-type="bibr" rid="B6">6</xref>]. Therefore, it is reasonable to consider alternative explanations for the increased prevalence of autoimmune diseases in human females.</p>
+          <p>A unifying feature of autoimmune disorders appears to be the loss of immunologic tolerance to self-antigens, and in many of these diseases there is evidence that T-cell tolerance has been broken. The most profound form of T-cell tolerance involves deletion of potentially self-reactive T cells during thymic selection. Thus, lack of exposure to a self-antigen in the thymus may lead to the presence of autoreactive T cells and may increase the risk of autoimmunity. An elegant example of this has recently been reported [<xref ref-type="bibr" rid="B7">7</xref>].</p>
+          <p>The existence of X-chromosome inactivation in females offers a potential mechanism whereby X-linked self-antigens may escape presentation in the thymus or in other peripheral sites that are involved in tolerance induction. Early in female development, one of the two X chromosomes in each cell undergoes an ordered process of inactivation, with subsequent silencing of most genes on the inactive X chromosome [<xref ref-type="bibr" rid="B8">8</xref>]. This phenomenon occurs at a very early embryonic stage [<xref ref-type="bibr" rid="B9">9</xref>], and thus all females are mosaic and may occasionally exhibit extreme skewing towards one or the other parental X chromosome. In theory, this may result in a situation in which polymorphic self-antigens on one X chromosome may fail to be expressed at sufficiently high levels in a tolerizing compartment, such as the thymus, and yet may be expressed at a considerable frequency in the peripheral soma. Thus, females may be predisposed to a situation in which they can occasionally express X-linked autoantigens in the periphery to which they have been inefficiently tolerized. Stewart [<xref ref-type="bibr" rid="B10">10</xref>] has recently speculated that such a mechanism may play a role in the predisposition to systemic lupus.</p>
+          <p>This hypothesis predicts that females with autoimmunity may be particularly prone to this mechanism of `inadequate tolerization' by virtue of extremely skewed X-chromosome inactivation. We therefore performed a comprehensive analysis of X-chromosome inactivation patterns in populations of females with multiple sclerosis, systemic lupus erythematosus, juvenile rheumatoid arthritis, and type 1 (insulin-dependent) diabetes mellitus, and in female control individuals. The results do not provide support for a major role for skewed X-chromosome inactivation in female predisposition to autoimmunity; however, neither is the underlying hypothesis disproved by the present data.</p>
+        </sec>
+        <sec>
+          <title>Materials and method:</title>
+          <p>DNA was obtained from female patients from the following sources: 45 persons with juvenile diabetes seen at the Virginia Mason Research Center in Seattle, Washington; 58 multiple sclerosis patients seen at the New York Hospital Multiple Sclerosis Center; 46 patients with systemic lupus erythematosus seen at the Hospital for Special Surgery (New York); 18 patients with juvenile rheumatoid arthritis seen at the Children's Hospital Medical Center in Cleveland. In addition, 30 healthy age-matched females were studied as normal controls.</p>
+          <p>Employing a modification of previously described methods [<xref ref-type="bibr" rid="B11">11</xref>], we utilized a fluorescent Hpa II/PCR assay of the androgen receptor (AR) locus to assess X-chromosome inactivation patterns. The AR gene contains a polymorphic CAG repeat, which is flanked by Hpa II sites. These Hpa II sites are methylated on the inactive X chromosome, and are unmethylated on the active X chromosome. By performing PCR amplification across this region after cutting with the methylation-sensitive enzyme Hpa II, the relative amounts of the methylated AR alleles can be quantitatively determined with a high degree of accuracy; variance on repeated assays is approximately 4% [<xref ref-type="bibr" rid="B12">12</xref>].</p>
+          <p>Skewing of X-chromosome inactivation is expressed as percentage deviation from equal (50:50) inactivation of the upper and lower AR alleles. Therefore, the maximal possible deviation is 50%, in which case all of the X chromosomes bearing one of the AR alleles are inactivated.</p>
+        </sec>
+        <sec>
+          <title>Results:</title>
+          <p>We examined X-chromosome inactivation patterns in several different populations. The results are summarized in Fig. <xref ref-type="fig" rid="F1">1</xref>. A wide range of X-inactivation skewing was observed in all five groups. Approximately 5% (nine out of 197) of individuals exhibited extreme skewing (greater than 40% deviation from a 50:50 distribution). However, there was no difference between the groups, either in the overall mean skewing, or in the fraction of individuals with extreme skewing (&gt;40%).</p>
+          <p>Although the present study was not initiated in order to examine allelic variation in the AR gene <italic>per se</italic>, the data provide an opportunity to address this question. Excessively long CAG repeats in the AR are a rare cause of spinal-bulbar muscular atrophy [<xref ref-type="bibr" rid="B13">13</xref>], and AR repeat length appears to have an influence on the biology of certain tumors [<xref ref-type="bibr" rid="B14">14</xref>,<xref ref-type="bibr" rid="B15">15</xref>]. In this context, it has been shown that transcription of AR correlates inversely with repeat length [<xref ref-type="bibr" rid="B16">16</xref>]. We therefore compared AR repeat length in control individuals and patients with autoimmunity. No differences were observed for mean repeat length, or for maximum and minimum repeat length, among the five groups. </p>
+        </sec>
+        <sec>
+          <title>Discussion:</title>
+          <p>The reason for the female predominance in most autoimmune diseases remains obscure. The present study was initiated in order to address the hypothesis that a nonhormonal mechanism related to X inactivation might be involved. The hypothesis rests on the idea that skewing of X inactivation might lead to a deficiency of tolerance induction in the thymus, particularly with respect to polymorphic X-linked autoantigens. The hypothesis predicts that skewed X inactivation would be more prevalent in females with autoimmune diseases than in female control individuals. This was not observed.</p>
+          <p>Nevertheless, these negative data do not rule out a role for X inactivation in female predisposition to loss of tolerance. A general model for how this mechanism might operate is shown in Fig. <xref ref-type="fig" rid="F2">2</xref>. Thymocytes undergo selection in the thymic parenchyma and, in the case of negative selection, the selecting elements appear to be derived from the bone marrow and consist mainly of thymic dendritic cells. If the thymic dendritic cell population exhibits random X inactivation, it is highly likely that differentiating thymocytes will contact dendritic cells that express self-antigens on both X chromosomes. This situation is outlined schematically on the left side of Fig. <xref ref-type="fig" rid="F2">2</xref>. However, if there is extremely skewed X inactivation in the thymic dendritic cell population, a particular thymocyte might not come into contact with dendritic cells that express one of the two X chormosomes. This would lead to a situation where T cells may undergo thymic maturation without having been negatively selected for antigens that are expressed on the predominantly inactive X chromosome. This situation is shown on the right side of Fig. <xref ref-type="fig" rid="F2">2</xref>.</p>
+          <p>In order for this mechanism to be physiologically relevant, some assumptions must be made. First, defective tolerance from skewed X inactivation should only be directed at X-linked antigens that are polymorphic, and for which the individual is heterozygous. Thus, this mechanism would not be expected to lead to lack of tolerance commonly, unless there are at least several highly polymorphic X-linked autoantigens in the population that are involved in thymic deletion events. Second, if this actually leads to autoimmunity, it also predicts that the initial break in tolerance that leads to disease should involve an X-linked autoantigen that is expressed in a peripheral nontolerizing site or circumstance.</p>
+          <p>A recent report [<xref ref-type="bibr" rid="B7">7</xref>] has elegantly demonstrated the importance of thymic deletion events in predisposition to autoimmune disease. The proteolipid protein (PLP) autoantigen is expressed in alternatively spliced forms, which exhibit tissue specific expression. A nonspliced variant is expressed in peripheral neural tissue. However, in the thymus a splice variant results in the lack of thymic expression of an immunodominant peptide. This results in loss of tolerace of T cells to this peptide, presumably on the basis of lack of thymic deletion of thymocytes that are reactive with this antigen. Interestingly, PLP is encoded on the X chromsome. However, there is no evidence that genetic polymorphisms control the level splicing of PLP within the thymus. Nevertheless, these data illustrate the potential importance of deficiencies in thymic deletion for autoimmune T-cell reactivity.</p>
+          <p>The present results suggest that if skewed X inactivation is relevant to thymic tolerance induction, then the effect does not depend on global skewing of X-chromosome inactivation, at least in the hematopoietic compartment. In this study we examined X-inactivation patterns in peripheral blood mononuclear cells, and the results should reflect the state of X inactivation in all mesenchymal tissues, including dendritic cells. X inactivation occurs at a very early time point in development, and thus the results in one tissue should reflect the general situation in the rest of the body. However, there may be exceptions to this. We have occasionally observed differences in X-inactivation patterns between buccal mucosa (an ectodermally derived tissue) and peripheral blood in the same individiual (unpublished observations). This could be a chance event, or it may result from selection for certain X-linked alleles during embryonic development, as has been described in carriers of X-linked immunodeficiencies [<xref ref-type="bibr" rid="B17">17</xref>].</p>
+          <p>Another consideration is that certain tissue microenvironments may be derived from very small numbers of founder cells, and thus may exhibit skewed utilization of one or the other X chromosome, even if the tissue as a whole is not skewed. This situation could vary over time. Thus, there may be time points at which certain thymic microenvironments are populated by dendritic cells that, for stochastic reasons, all utilize the same X chromosome. This would create a `window of opportunity' in which a given thymocyte, in a given selecting location, could escape negative selection by antigens on the inactive X chromosome. The likelihood of this happening would obviously depend on the number of dendritic cells that are usually contacted by a thymocyte during thymic selection. There is limited information on this point, although Stewart [<xref ref-type="bibr" rid="B10">10</xref>] has theorized that this number may be as low as 15. If this is the case, then escape from thymic deletion may still occur in females who are heterozygous for a relevant X-linked antigen, even if the hematopoietic cells in general do not exhibit extreme skewing.</p>
+          <p>In conclusion, we suggest that X-chromosome inactivation needs to be considered as a potential factor in the predominance of females in most autoimmune diseases. Our inability to show an increase in X-chromosome skewing in females with autoimmunity does not eliminate this as an etiologic contributor to loss of immunologic tolerance. Future experiments must be directed at a detailed analysis of tissue patterns of X inactivation, as well as at a search for potential X-linked autoantigens.</p>
+        </sec>
+      </abstract>
+      <kwd-group>
+        <kwd>autoimmunity</kwd>
+        <kwd>gender</kwd>
+        <kwd>immune tolerance</kwd>
+        <kwd>X chromosome</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Introduction</title>
+      <p>A reduction in the sex ratio (male : female) is characteristic of most autoimmune disorders. The increased prevalence in females ranges from a modest 2:1 for multiple sclerosis [<xref ref-type="bibr" rid="B1">1</xref>], to approximately 10:1 for systemic lupus erythematosus [<xref ref-type="bibr" rid="B2">2</xref>]. This tendency towards autoimmunity in females is often ascribed to hormonal differences because, in a number of experimental disease models, estrogens exacerbate disease and androgens can inhibit disease activity [<xref ref-type="bibr" rid="B3">3</xref>,<xref ref-type="bibr" rid="B4">4</xref>]. However, human studies have failed to demonstrate a clear-cut influence of hormonal environment on disease susceptibility to lupus or other autoimmune disorders. In addition, many childhood forms of autoimmunity, such as juvenile rheumatoid arthritis, exhibit female predominance [<xref ref-type="bibr" rid="B5">5</xref>]. Interestingly, juvenile (type 1) diabetes is an exception to this general trend, with a sex ratio close to 1 in most studies [<xref ref-type="bibr" rid="B6">6</xref>]. Therefore, it is reasonable to consider alternative explanations for the increased prevalence of autoimmune diseases in human females.</p>
+      <p>A unifying feature of autoimmune disorders appears to be the loss of immunologic tolerance to self-antigens, and in many of these diseases there is evidence that T-cell tolerance has been broken. The most profound form of T-cell tolerance involves deletion of potentially self-reactive T cells during thymic selection. Thus, lack of exposure to a self-antigen in the thymus may lead to the presence of autoreactive T cells and increase the risk of autoimmunity. An elegant example of this has recently been reported [<xref ref-type="bibr" rid="B7">7</xref>].</p>
+      <p>The existence of X-chromosome inactivation in females offers a potential mechanism whereby X-linked self-antigens may escape presentation in the thymus or in other peripheral sites that are involved in tolerance induction. Early in female development, one of the two X chromosomes in each cell undergoes an ordered process of inactivation, with subsequent silencing of most genes on the inactive X chromosome [<xref ref-type="bibr" rid="B8">8</xref>]. This phenomenon occurs at a very early embryonic stage [<xref ref-type="bibr" rid="B9">9</xref>], and thus all females are mosaic and may occasionally exhibit extreme skewing towards one or the other parental X chromosome. In theory, this may result in a situation in which polymorphic self-antigens on one X chromosome may fail to be expressed at sufficiently high levels in a tolerizing compartment, such as the thymus, and yet may be expressed at considerable frequency in the peripheral soma. Thus, females may be predisposed to a situation in which they can occasionally express X-linked autoantigens in the periphery to which they have been inefficiently tolerized. Stewart [<xref ref-type="bibr" rid="B10">10</xref>] has recently speculated that such a mechanism may play a role in the predisposition to systemic lupus.</p>
+      <p>This hypothesis predicts that females with autoimmunity may be particularly prone to this mechanism of `inadequate tolerization' by virtue of extremely skewed X-chromosome inactivation. We therefore performed a comprehensive analysis of X-chromosome inactivation patterns in populations of females with multiple sclerosis, systemic lupus, juvenile rheumatoid arthritis, and type 1 (insulin-dependent) diabetes mellitus, and in female control individuals. The results do not provide support for a major role for skewed X-chromosome inactivation in female predisposition to autoimmunity; however, neither is the underlying hypothesis disproved by our data.</p>
+    </sec>
+    <sec>
+      <title>Materials and method</title>
+      <sec>
+        <title>Subjects</title>
+        <p>DNA was obtained from female patients from the following sources: 45 persons with juvenile diabetes seen at the Virginia Mason Research Center in Seattle, Washington; 58 multiple sclerosis patients seen at the New York Hospital Multiple Sclerosis Center; 46 patients with systemic lupus erythematosus seen at the Hospital for Special Surgery (New York); 18 patients with juvenile rheumatoid arthritis seen at the Children's Hospital Medical Center in Cleveland. In addition, 30 healthy age-matched females were studied as normal controls.</p>
+      </sec>
+      <sec>
+        <title>Hpa II/polymerase chain reaction assay for X-chromosome inactivation</title>
+        <p>A modification to a previously described assay for AR methylation [<xref ref-type="bibr" rid="B11">11</xref>] was used for these studies. In the normal females the AR gene is methylated on the inactive X chromosome and is undermethylated on the active X chromosome. Furthermore, the presence of a highly polymorphic triplet repeat within the AR gene allows for the discrimination of each X chromosome in most female subjects (Fig. <xref ref-type="fig" rid="F3">3</xref>). Thus, allele-specific methylation patterns can be distinguished using this gene.</p>
+        <p>Genomic DNA (approximately 200 ng) was digested overnight using a methylation-sensitive restriction enzyme HpaII, as per the manufacturer's instructions (Gibco BRL, Rockville, MD, USA). A mock sample as control was prepared simultaneously without the HpaII enzyme. After the digestion the samples were boiled for 10 min to inactivate the enzyme. PCR amplification was performed, with final concentration of the digest equivalent to approximately 100 ng of the DNA, 1 × PCR bufferII (Perkin-Elmer, Foster City, CA, USA), 2.5 mmol/l MgCl<sub>2</sub>, and amplitaq gold 1.25 units.</p>
+        <p>Primers used were AR1 (5'-TCCAGAATCTGTTCCA-GAGCGTGC-3') and AR2 (5'-GCTGTGAAGGTTGCT-GTTCCTCAT-3'). These primers flank the triple repeat CAG and the HpaII sites in the first exon of the AR gene (Fig. <xref ref-type="fig" rid="F3">3</xref>). The AR1 primer was fluorescence labeled with 6-Fam and TET. The 6-Fam-AR1 and the TET-AR1 were used for mock and HpaII-digested samples, respectively. This combination allowed simultaneous analyses of the PCR products of the HpaII- and mock-treated samples using the ABI310 Genetic Analyzer (Perkin-Elmer). The final concentration of the AR1 primer was 3 pmol 6-Fam-AR1+7 pmol unlabelled AR1 and 10 pmol of unlabeled AR2 in a 50 μl reaction.</p>
+        <p>The cycling conditions were as follows: denaturation at 95°C/12 min to activate the amplitaq gold, followed by 35 cycles of denaturation at 95°C/45 s, annealing at 60°C/30 s and extension at 72°C/30 s. After 35 cycles, the final extension was done at 72°C/10 min. The PCR products of each sample (mock and HpaII) were diluted 1:10 in the same vial. One microliter of the diluted product was then added to a mixture containing 12 μl deionized formamide and 0.5 μl molecular weight standard GS 350 TAMRA.The vials were denatured at 95°C/5 min, cooled on ice, and resolved using a 310 Genetic Analyzer (Perkin-Elmer).</p>
+      </sec>
+      <sec>
+        <title>Calculations for percentage of skewing of X inactivation</title>
+        <p>Two peaks corresponding to two alleles were obtained from the 310 Genetic Analyzer for each mock- and HpaII-treated sample. The relative intensity of the larger AR allele (higher molecular weight, peak 2) with respect to the smaller AR allele (low molecular weight, peak 1) was calculated and expressed as the ratio R (peak 2 area/peak 1 area). The ratios in the mock-digested (R<sub>M</sub>) and HpaII-digested (R<sub>H</sub>) samples were calculated separately, and were then averaged for each of the two sets of duplicate samples. For each individual, a normalized ratio (R<sub>N</sub> = R<sub>H</sub>/R<sub>M</sub>) was calculated to correct for occasional minor variation in efficiency of amplification of the two AR alleles. This normalized ratio was used to determine the percentage of inactivation of the X chromosome bearing the larger AR allele: percentage inactivation = [R<sub>N</sub>/(R<sub>N</sub> + 1)] × 100. The degree of skewing was calculated by subtracting 50 from the observed degree of inactivation.</p>
+      </sec>
+    </sec>
+    <sec>
+      <title>Results</title>
+      <sec>
+        <title>Fluorescent Hpa II/polymerase chain reaction assay for X-chromosome inactivation</title>
+        <p>Employing a modification of previously described methods [<xref ref-type="bibr" rid="B11">11</xref>], we utilized a fluorescent Hpa II/PCR assay of the AR locus to assess X-chromosome inactivation patterns. As shown in Fig. <xref ref-type="fig" rid="F3">3</xref>, the AR gene contains a polymorphic CAG repeat that is flanked by Hpa II sites. These Hpa II sites are methylated on the inactive X chromosome, and are unmethylated on the active X chromosome. By performing PCR amplification across this region after cutting with the methylation-sensitive enzyme Hpa II, the relative amounts of the methylated AR alleles can be quantitatively determined with a high degree of accuracy; variance on repeated assays is approximately 4% [<xref ref-type="bibr" rid="B12">12</xref>].</p>
+        <p>Two examples of this assay are shown in Fig. <xref ref-type="fig" rid="F4">4</xref>. In Fig. <xref ref-type="fig" rid="F4">4a</xref>, an individual with equivalent methylation of both AR alleles is shown. In this case, the relative peak intensity is equivalent in the mock-digested and Hpa II-digested samples. In Fig. <xref ref-type="fig" rid="F4">4b</xref>, an individual with extremely skewed X inactivation is shown, in whom the lower allele (271 bp) is relatively over-methylated compared with the upper (284 bp) allele. Thus, the X chromosome bearing the lower allele is preferentially inactivated. As described in the Materials and method section, all assays were normalized to the mock results and performed in duplicate. Skewing of X-chromosome inactivation is expressed as a percentage deviation from equal (50:50) inactivation of the upper and lower AR alleles. Therefore, the maximal possible deviation is 50%, in which case all of the X chromosome bearing one of the AR alleles are inactivated.</p>
+      </sec>
+      <sec>
+        <title>Comparison of X-chromosome inactivation patterns in normal females and females with autoimmune diseases</title>
+        <p>We examined X-chromosome inactivation patterns in several different populations. The results are summarized in Fig. <xref ref-type="fig" rid="F1">1</xref>. A wide range of X-inactivation skewing was observed in all five groups. Approximately 5% (nine out of 197) of individuals exhibited extreme skewing (greater than 40% deviation from a 50:50 distribution). However, there was no difference between the groups, either in the overall mean skewing, or in the fraction of individuals with extreme skewing (&gt;40%).</p>
+      </sec>
+      <sec>
+        <title>Androgen receptor gene allele size comparisons among patients and controls</title>
+        <p>Although the present study was not initiated to examine allelic variation in the AR gene <italic>per se</italic>, the data provide an opportunity to address this question. Excessively long CAG repeats in the AR gene are a rare cause of spinal-bulbar muscular atrophy [<xref ref-type="bibr" rid="B13">13</xref>], and AR repeat length appears to have an influence on the biology of certain tumors [<xref ref-type="bibr" rid="B14">14</xref>,<xref ref-type="bibr" rid="B15">15</xref>]. In this context, it has been shown [<xref ref-type="bibr" rid="B16">16</xref>] that transcription of the AR gene correlates inversely with repeat length.We therefore compared AR repeat length in control individuals and patients with autoimmunity. No differences were observed for mean repeat length, or for maximum and minimum repeat length, among the five groups.</p>
+      </sec>
+    </sec>
+    <sec>
+      <title>Discussion</title>
+      <p>The reason for the female predominance in most autoimmune diseases remains obscure. The present study was initiated in order to address the hypothesis that a nonhormonal mechanism related to X inactivation might be involved. The hypothesis rests on the idea that skewing of X inactivation might lead to a deficiency of tolerance induction in the thymus, particularly with respect to polymorphic X-linked autoantigens. The hypothesis predicts that skewed X inactivation would be more prevalent in females with autoimmune diseases than in female control individuals. This was not observed.</p>
+      <p>Nevertheless, these negative data do not rule out a role for X inactivation in female predisposition to loss of tolerance. A general model for how this mechanism might operate is shown in Fig. <xref ref-type="fig" rid="F1">1</xref>. Thymocytes undergo selection in the thymic parenchyma, and in the case of negative selection, the selecting elements appear to be derived from the bone marrow and consist mainly of thymic dendritic cells. If the thymic dendritic cell population exhibits random X inactivation, it is highly likely that differentiating thymocytes will contact dendritic cells that express self-antigens on both X chromosomes. This situation is outlined schematically on the left side of Fig. <xref ref-type="fig" rid="F2">2</xref>. However, if there is extremely skewed X inactivation in the thymic dendritic cell population, a particular thymocyte may not come into contact with dendritic cells that express one of the two X chromosomes. This would lead to a situation where T cells may undergo thymic maturation without having been negatively selected for antigens that are expressed on the predominantly inactive X chromosome. This situation is shown on the right side of Fig. <xref ref-type="fig" rid="F2">2</xref>.</p>
+      <p>In order for this mechanism to be physiologically relevant, several assumptions must be made. First, defective tolerance from skewed X inactivation should only be directed at X-linked antigens that are polymorphic, and for which the individual is heterozygous. Thus, this mechanism would not be expected to commonly lead to lack of tolerance unless there are at least several highly polymorphic X-linked autoantigens in the population that are involved in thymic deletion events. Second, if this actually leads to autoimmunity, it also predicts that the initial break in tolerance that leads to disease should involve an X-linked autoantigen that is expressed in a peripheral nontolerizing site or circumstance.</p>
+      <p>A recent report [<xref ref-type="bibr" rid="B7">7</xref>] elegantly demonstrated the importance of thymic deletion events in predisposing to autoimmune disease. The PLP autoantigen is expressed in alternatively spliced forms, which exhibit tissue-specific expression. A nonspliced variant is expressed in periperal neural tissue. However, in the thymus a splice variant results in the lack of thymic expression of an immunodominant peptide. This results in loss of tolerace of T cells to this peptide, presumably on the basis of lack of thymic deletion of thymocytes that are reactive with this antigen. Interestingly, PLP is encoded on the X chromsome. However, there is no evidence that genetic polymorphisms control the level splicing of PLP within the thymus. Nevertheless, these data illustrate the potential importance of deficiencies in thymic deletion for autoimmune T-cell reactivity.</p>
+      <p>The present results suggest that if skewed X inactivation is relevant to induction of thymic tolerance, then the effect does not depend on global skewing of X-chromosome inactivation, at least in the hematopoietic compartment. In this study we examined X-inactivation patterns in peripheral blood mononuclear cells, and the results should reflect the state of X inactivation in all mesenchymal tissues, including dendritic cells. X inactivation occurs at a very early time point in development, and thus the results in one tissue should reflect the general situation in the rest of the body. However, there may be exceptions to this. We have occasionally observed differences in X inactivation patterns between buccal mucosa (an ectodermally derived tissue) and peripheral blood (mesoderm) in the same individual (unpublished observations). This could be a chance event, or may result from selection for certain X-linked alleles during embryonic development, as has been described in carriers of X-linked immunodeficiencies [<xref ref-type="bibr" rid="B17">17</xref>]. However, in general, subsets of cells within the hematopoietic compartment do not display differences in X-inactivation patterns (unpublished observations).</p>
+      <p>Another consideration is that certain tissue microenvironments may be derived from very small numbers of founder cells, and thus may exhibit skewed utilization of one or the other X chromosome, even if the tissue as a whole is not skewed. This situation could vary over time. Thus, there may be time points at which certain thymic microenvironments are populated by dendritic cells that, for stochastic reasons, all utilize the same X chromosome. This would create a `window of opportunity' in which a given thymocyte, in a given selecting location, could escape negative selection by antigens on the inactive X chromosome. The likelihood of this happening would obviously depend on the number of dendritic cells that are usually contacted by a thymocyte during thymic selection. There is limited information on this point, although Stewart [<xref ref-type="bibr" rid="B10">10</xref>] has theorized that this number may be as low as 15. If this is the case, escape from thymic deletion may still occur in females who are heterozygous for a relevant X-linked antigen, even if the hematopoietic cells in general do not exhibit extreme skewing.</p>
+      <p>If the latter scenario is operative, it will be extremely difficult to document it by studying X-inactivation patterns. One might examine X-inactivation skewing specifically in thymic dendritic populations, but if the effect is at the level of microenvironment and varies over time, then it will not be possible to detect this using methods directed at large cell populations, as we have done here. Conceivably, examination of thymic tissue sections could provide support for the hypothesis. Another aspect of this is that some thymic deletion events appear to be mediated by thymic epithelial cells at the cortico-medullary junction. Interestingly, thymic epithelial cells appear to be derived from very few founder cells [<xref ref-type="bibr" rid="B18">18</xref>], and thus should exhibit a rather large degree of `patchiness' with respect to X inactivation. This again might lead to local epithelial cell microenvironments that fail to delete for X-linked autoantigens.</p>
+      <p>It has recently become apparent that mechanisms of peripheral tolerance also exist, and we have considered the possibility that skewed X inactivation in a peripheral tolerizing compartment might also lead to inefficient tolerance. A major mechanism of peripheral tolerance induction appears to involve the recognition of tolerizing antigens by T cells in the absence of costimulation [<xref ref-type="bibr" rid="B19">19</xref>]. This may specifically occur in the paracortical regions of lymph nodes, without further progression of the tolerized T cells into lymph node follicles. Because this mechanism presumably involves circulating antigen, it is difficult to invoke a role for X-inactivation skewing in altering this process, unless the skewing were virtually complete. Tolerance induction by parenchymal tissue has also been described [<xref ref-type="bibr" rid="B20">20</xref>], and may be a multistage process that is still not entirely understood. Conceivably, skewed expression of X-linked autoantigens could play a role here, but this would require invoking a peripheral tolerizing compartment that is limiting with respect to the dosage of tolerizing cells to which peripheral T cells can be exposed. No such compartment has yet been defined.</p>
+      <p>In conclusion, we suggest that X-chromosome inactivation needs to be considered as a potential factor in the predominance of females in most autoimmune diseases. Our inability to show an increase in X-chromosome skewing in females with autoimmunity does not eliminate this as an etiologic contributor to loss of immunologic tolerance. Future experiments must be directed at detailed analysis of tissue patterns of X inactivation, as well as at a search for potential X-linked autoantigens.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="B1">
+        <citation citation-type="other">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Compston</surname>
+              <given-names>A</given-names>
+            </name>
+          </person-group>
+          <article-title>Genetic susceptibility to multiple sclerosis.</article-title>
+          <source>McAlpine's Multiple Sclerosis. Edited by Compston A, Ebers G, Lassman H, McDonald I, Matthews B, Wekerle H. London: Churchill Livingstone,</source>
+          <year>1998</year>
+          <fpage>101</fpage>
+          <lpage>142</lpage>
+        </citation>
+      </ref>
+      <ref id="B2">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>McCarthy</surname>
+              <given-names>DJ</given-names>
+            </name>
+            <name>
+              <surname>Manzi</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Medsger</surname>
+              <given-names>TA</given-names>
+              <suffix>Jr</suffix>
+            </name>
+            <name>
+              <surname>Ramsey-Goldman</surname>
+              <given-names>R</given-names>
+            </name>
+            <name>
+              <surname>LaPorte</surname>
+              <given-names>RE</given-names>
+            </name>
+            <name>
+              <surname>Kwoh</surname>
+              <given-names>CK</given-names>
+            </name>
+          </person-group>
+          <article-title>Incidence of systemic lupus ertythematosus.</article-title>
+          <source>Arthritis Rheum</source>
+          <year>1995</year>
+          <volume>38</volume>
+          <fpage>1260</fpage>
+          <lpage>1270</lpage>
+          <pub-id pub-id-type="pmid">7575721</pub-id>
+        </citation>
+      </ref>
+      <ref id="B3">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cooper</surname>
+              <given-names>GS</given-names>
+            </name>
+            <name>
+              <surname>Dooley</surname>
+              <given-names>MA</given-names>
+            </name>
+            <name>
+              <surname>Treadwell</surname>
+              <given-names>EL</given-names>
+            </name>
+            <name>
+              <surname>St Clair</surname>
+              <given-names>EW</given-names>
+            </name>
+            <name>
+              <surname>Parks</surname>
+              <given-names>CG</given-names>
+            </name>
+            <name>
+              <surname>Gilkeson</surname>
+              <given-names>GS</given-names>
+            </name>
+          </person-group>
+          <article-title>Hormonal, environmental, and infectious risk factors for developing systemic lupus erythematosus.</article-title>
+          <source>Arthritis Rheum</source>
+          <year>1998</year>
+          <volume>41</volume>
+          <fpage>1714</fpage>
+          <lpage>1724</lpage>
+          <pub-id pub-id-type="pmid">9778212</pub-id>
+        </citation>
+      </ref>
+      <ref id="B4">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cutolo</surname>
+              <given-names>N</given-names>
+            </name>
+            <name>
+              <surname>Masi</surname>
+              <given-names>AT</given-names>
+            </name>
+          </person-group>
+          <article-title>Do androgens influence the pathophysiology of rheumatoid arthritis? Facts and hypotheses.</article-title>
+          <source>J Rheumatol</source>
+          <year>1998</year>
+          <volume>25</volume>
+          <fpage>1041</fpage>
+          <lpage>1047</lpage>
+          <pub-id pub-id-type="pmid">9632060</pub-id>
+        </citation>
+      </ref>
+      <ref id="B5">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Kerckhove</surname>
+              <given-names>CV</given-names>
+            </name>
+            <name>
+              <surname>Balakrishnan</surname>
+              <given-names>K</given-names>
+            </name>
+            <name>
+              <surname>Levinson</surname>
+              <given-names>JE</given-names>
+            </name>
+            <name>
+              <surname>Larson</surname>
+              <given-names>MG</given-names>
+            </name>
+            <name>
+              <surname>Glass</surname>
+              <given-names>DN</given-names>
+            </name>
+          </person-group>
+          <article-title>HLA and altered sex ratios in juvenile rheumatoid arthritis sibships.</article-title>
+          <source>Hum Immunol</source>
+          <year>1988</year>
+          <volume>22</volume>
+          <fpage>227</fpage>
+          <lpage>233</lpage>
+          <pub-id pub-id-type="pmid">3170286</pub-id>
+        </citation>
+      </ref>
+      <ref id="B6">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cucca</surname>
+              <given-names>F</given-names>
+            </name>
+            <name>
+              <surname>Goy</surname>
+              <given-names>JV</given-names>
+            </name>
+            <name>
+              <surname>Kawaguchi</surname>
+              <given-names>Y</given-names>
+            </name>
+            <name>
+              <surname>Esposito</surname>
+              <given-names>L</given-names>
+            </name>
+            <name>
+              <surname>Merriman</surname>
+              <given-names>ME</given-names>
+            </name>
+            <name>
+              <surname>Wilson</surname>
+              <given-names>AJ</given-names>
+            </name>
+            <name>
+              <surname>Cordell</surname>
+              <given-names>HJ</given-names>
+            </name>
+            <name>
+              <surname>Bain</surname>
+              <given-names>SC</given-names>
+            </name>
+            <name>
+              <surname>Todd</surname>
+              <given-names>JA</given-names>
+            </name>
+          </person-group>
+          <article-title>A male-female bias in type 1 diabetes and linkage to chromosome Xp in MHC HLA-DR3-positive patients.</article-title>
+          <source>Nature Genet</source>
+          <year>1998</year>
+          <volume>19</volume>
+          <fpage>301</fpage>
+          <lpage>302</lpage>
+          <pub-id pub-id-type="pmid">9662410</pub-id>
+        </citation>
+      </ref>
+      <ref id="B7">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Klein</surname>
+              <given-names>L</given-names>
+            </name>
+            <name>
+              <surname>Klugmann</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Nave</surname>
+              <given-names>K-A</given-names>
+            </name>
+            <name>
+              <surname>Tuohy</surname>
+              <given-names>V K</given-names>
+            </name>
+            <name>
+              <surname>Kyewski</surname>
+              <given-names>B</given-names>
+            </name>
+          </person-group>
+          <article-title>Shaping of the autoreactive T-cell repertoire by a splice variant of self protein expressed in thymic epithelial cells.</article-title>
+          <source>Nature Med</source>
+          <year>2000</year>
+          <volume>6</volume>
+          <fpage>56</fpage>
+          <lpage>61</lpage>
+          <pub-id pub-id-type="pmid">10613824</pub-id>
+        </citation>
+      </ref>
+      <ref id="B8">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Gartler</surname>
+              <given-names>SM</given-names>
+            </name>
+            <name>
+              <surname>Riggs</surname>
+              <given-names>AD</given-names>
+            </name>
+          </person-group>
+          <article-title>Mammalian X-chromosome inactivation.</article-title>
+          <source>Ann Rev Genet</source>
+          <year>1983</year>
+          <volume>17</volume>
+          <fpage>155</fpage>
+          <lpage>190</lpage>
+          <pub-id pub-id-type="pmid">6364959</pub-id>
+        </citation>
+      </ref>
+      <ref id="B9">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Puck</surname>
+              <given-names>JM</given-names>
+            </name>
+            <name>
+              <surname>Stewart</surname>
+              <given-names>CC</given-names>
+            </name>
+            <name>
+              <surname>Nussbaum</surname>
+              <given-names>RL</given-names>
+            </name>
+          </person-group>
+          <article-title>Maximum likelihood analysis of human T-cell X-chromosome inactivation patterns: normal women versus carriers of X-linked severe combined immunodeficiency.</article-title>
+          <source>Am J Hum Genet</source>
+          <year>1992</year>
+          <volume>50</volume>
+          <fpage>742</fpage>
+          <lpage>748</lpage>
+          <pub-id pub-id-type="pmid">1550118</pub-id>
+        </citation>
+      </ref>
+      <ref id="B10">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Stewart</surname>
+              <given-names>J</given-names>
+            </name>
+          </person-group>
+          <article-title>The female X-inactivatrion mosaic in systemic lupus erythematosus.</article-title>
+          <source>Immunol Today</source>
+          <year>1998</year>
+          <volume>19</volume>
+          <fpage>352</fpage>
+          <lpage>357</lpage>
+          <pub-id pub-id-type="pmid">9709502</pub-id>
+        </citation>
+      </ref>
+      <ref id="B11">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Allen</surname>
+              <given-names>C</given-names>
+            </name>
+            <name>
+              <surname>Zoghbi</surname>
+              <given-names>HY</given-names>
+            </name>
+            <name>
+              <surname>Moseley</surname>
+              <given-names>AB</given-names>
+            </name>
+            <name>
+              <surname>Rosenblatt</surname>
+              <given-names>HM</given-names>
+            </name>
+            <name>
+              <surname>Belmont</surname>
+              <given-names>JW</given-names>
+            </name>
+          </person-group>
+          <article-title>Methylation of HpaII and HhaI sites near the polymorphic CAG repeat in the human androgen-receptor gene correlates with X chromosome inactivation.</article-title>
+          <source>Am J Hum Genet</source>
+          <year>1992</year>
+          <volume>51</volume>
+          <fpage>1229</fpage>
+          <lpage>1239</lpage>
+          <pub-id pub-id-type="pmid">1281384</pub-id>
+        </citation>
+      </ref>
+      <ref id="B12">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Monteiro</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Derom</surname>
+              <given-names>C</given-names>
+            </name>
+            <name>
+              <surname>Vlietinck</surname>
+              <given-names>R</given-names>
+            </name>
+            <name>
+              <surname>Kohn</surname>
+              <given-names>N</given-names>
+            </name>
+            <name>
+              <surname>Lesser</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Gregersen</surname>
+              <given-names>PK</given-names>
+            </name>
+          </person-group>
+          <article-title>Commitment to X-inactivation precedes the twinning event in monochorionic monozygotic (MC-MZ) twins.</article-title>
+          <source>Am J Hum Genet</source>
+          <year>1998</year>
+          <volume>63</volume>
+          <fpage>339</fpage>
+          <lpage>346</lpage>
+          <pub-id pub-id-type="pmid">9683609</pub-id>
+        </citation>
+      </ref>
+      <ref id="B13">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>La Spada</surname>
+              <given-names>AR</given-names>
+            </name>
+            <name>
+              <surname>Wilson</surname>
+              <given-names>EM</given-names>
+            </name>
+            <name>
+              <surname>Lubahn</surname>
+              <given-names>DB</given-names>
+            </name>
+            <name>
+              <surname>Harding</surname>
+              <given-names>AE</given-names>
+            </name>
+            <name>
+              <surname>Fischbeck</surname>
+              <given-names>KH</given-names>
+            </name>
+          </person-group>
+          <article-title>Androgen receptor gene mutations in X-linked spinal and bulbar muscular atrophy.</article-title>
+          <source>Nature</source>
+          <year>1991</year>
+          <volume>352</volume>
+          <fpage>77</fpage>
+          <lpage>79</lpage>
+          <pub-id pub-id-type="pmid">2062380</pub-id>
+        </citation>
+      </ref>
+      <ref id="B14">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Rebbeck</surname>
+              <given-names>TR</given-names>
+            </name>
+            <name>
+              <surname>Kantoff</surname>
+              <given-names>PW</given-names>
+            </name>
+            <name>
+              <surname>Krithivas</surname>
+              <given-names>K</given-names>
+            </name>
+            <name>
+              <surname>Neuhausen</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Blackwood</surname>
+              <given-names>MA</given-names>
+            </name>
+            <name>
+              <surname>Godwin</surname>
+              <given-names>AK</given-names>
+            </name>
+            <name>
+              <surname>Daly</surname>
+              <given-names>MB</given-names>
+            </name>
+            <name>
+              <surname>Narod</surname>
+              <given-names>SA</given-names>
+            </name>
+            <name>
+              <surname>Garber</surname>
+              <given-names>JE</given-names>
+            </name>
+            <name>
+              <surname>Lynch</surname>
+              <given-names>HT</given-names>
+            </name>
+            <name>
+              <surname>Weber</surname>
+              <given-names>BL</given-names>
+            </name>
+            <name>
+              <surname>Brown</surname>
+              <given-names>M</given-names>
+            </name>
+          </person-group>
+          <article-title>Modification of BRCA1-associated breast cancer risk by the polymorphic androgen-receptor CAG repeat.</article-title>
+          <source>Am J Hum Genet</source>
+          <year>1999</year>
+          <volume>64</volume>
+          <fpage>1371</fpage>
+          <lpage>1377</lpage>
+          <pub-id pub-id-type="pmid">10205268</pub-id>
+        </citation>
+      </ref>
+      <ref id="B15">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Giovannucci</surname>
+              <given-names>E</given-names>
+            </name>
+            <name>
+              <surname>Stampfer</surname>
+              <given-names>MJ</given-names>
+            </name>
+            <name>
+              <surname>Krithivas</surname>
+              <given-names>K</given-names>
+            </name>
+            <name>
+              <surname>Brown</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Dahl</surname>
+              <given-names>D</given-names>
+            </name>
+            <name>
+              <surname>Brufsky</surname>
+              <given-names>A</given-names>
+            </name>
+            <name>
+              <surname>Talcott</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Hennekens</surname>
+              <given-names>CH</given-names>
+            </name>
+            <name>
+              <surname>Kantoff</surname>
+              <given-names>PW</given-names>
+            </name>
+          </person-group>
+          <article-title>The CAG repeat within the androgen receptor gene and its relationship to prostate cancer.</article-title>
+          <source>Proc Natl Acad Sci USA</source>
+          <year>1997</year>
+          <volume>94</volume>
+          <fpage>3320</fpage>
+          <lpage>3323</lpage>
+          <pub-id pub-id-type="pmid">9096391</pub-id>
+        </citation>
+      </ref>
+      <ref id="B16">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chamberlain</surname>
+              <given-names>NL</given-names>
+            </name>
+            <name>
+              <surname>Driver</surname>
+              <given-names>ED</given-names>
+            </name>
+            <name>
+              <surname>Miesfeld</surname>
+              <given-names>RL</given-names>
+            </name>
+          </person-group>
+          <article-title>The length and location of CAG trinucleotide repeats in the androgen receptor N-terminal domain affect transactivation function.</article-title>
+          <source>Nucleic Acids Res</source>
+          <year>1994</year>
+          <volume>22</volume>
+          <fpage>3181</fpage>
+          <lpage>3186</lpage>
+          <pub-id pub-id-type="pmid">8065934</pub-id>
+        </citation>
+      </ref>
+      <ref id="B17">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Puck</surname>
+              <given-names>J</given-names>
+            </name>
+            <name>
+              <surname>Krause</surname>
+              <given-names>C</given-names>
+            </name>
+            <name>
+              <surname>Pucj</surname>
+              <given-names>S</given-names>
+            </name>
+            <name>
+              <surname>Buckley</surname>
+              <given-names>R</given-names>
+            </name>
+            <name>
+              <surname>Conley</surname>
+              <given-names>M</given-names>
+            </name>
+          </person-group>
+          <article-title>Prenatal test for X-linked severe combined immunodeficiency by analysis of maternal X-chromosome inactivation and linkage analysis.</article-title>
+          <source>N Engl J Med</source>
+          <year>1990</year>
+          <volume>322</volume>
+          <fpage>1063</fpage>
+          <lpage>1066</lpage>
+          <pub-id pub-id-type="pmid">2320067</pub-id>
+        </citation>
+      </ref>
+      <ref id="B18">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Wilcox</surname>
+              <given-names>N</given-names>
+            </name>
+            <name>
+              <surname>Schluep</surname>
+              <given-names>M</given-names>
+            </name>
+            <name>
+              <surname>Ritter</surname>
+              <given-names>MA</given-names>
+            </name>
+          </person-group>
+          <article-title>Myasthenic and nonmyasthenic thymoma. An expansion of a minor cortical epithelial cell subset?</article-title>
+          <source>Am J Pathol</source>
+          <year>1987</year>
+          <volume>127</volume>
+          <fpage>447</fpage>
+          <lpage>460</lpage>
+          <pub-id pub-id-type="pmid">2438939</pub-id>
+        </citation>
+      </ref>
+      <ref id="B19">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Mondino</surname>
+              <given-names>A</given-names>
+            </name>
+            <name>
+              <surname>Khoruts</surname>
+              <given-names>A</given-names>
+            </name>
+            <name>
+              <surname>Jenkins</surname>
+              <given-names>MK</given-names>
+            </name>
+          </person-group>
+          <article-title>The anatomy of T-cell activation and tolerance.</article-title>
+          <source>Proc Natl Acad Sci USA</source>
+          <year>1996</year>
+          <volume>93</volume>
+          <fpage>2245</fpage>
+          <lpage>2252</lpage>
+          <pub-id pub-id-type="pmid">8637857</pub-id>
+        </citation>
+      </ref>
+      <ref id="B20">
+        <citation citation-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Arnold</surname>
+              <given-names>B</given-names>
+            </name>
+            <name>
+              <surname>Schonrich</surname>
+              <given-names>G</given-names>
+            </name>
+            <name>
+              <surname>Hammerling</surname>
+              <given-names>GJ</given-names>
+            </name>
+          </person-group>
+          <article-title>Multiple levels of peripheral tolerance.</article-title>
+          <source>Immunol Today</source>
+          <year>1993</year>
+          <volume>14</volume>
+          <fpage>12</fpage>
+          <lpage>14</lpage>
+          <pub-id pub-id-type="pmid">8442855</pub-id>
+        </citation>
+      </ref>
+    </ref-list>
+    <sec sec-type="display-objects">
+      <title>Figures and Tables</title>
+      <fig position="float" id="F1">
+        <label>Figure 1</label>
+        <caption>
+          <p>Comparison of skewing of X inactivation in normal female control individuals, and patients with various autoimmune diseases. Each dot represents one individual. The mean values for degree of skewing of X-inactivation are indicated for each population.</p>
+        </caption>
+        <graphic xlink:href="ar-2-5-399-1"/>
+      </fig>
+      <fig position="float" id="F2">
+        <label>Figure 2</label>
+        <caption>
+          <p>A model showing the consequence of skewed X-chromosome inactivation on tolerance induction in the thymus. Thymocytes enter the thymus and proceed on a pathway that exposes them to thymic-deleting elements, mainly dendritic cells in the thymic medulla. Dendritic cells are schematically illustrated here as grey or black, depending on which of the two parental X chromosomes are predominantly active in each cell. On the left hand side of the figure, transiting thymocytes will be exposed to dendritic cells that express both parental X chromosome, and thus will be tolerant (ie deleted) to X-linked antigens from both parents. On the right hand side of the figure, transiting thymocytes will likely be exposed only to the `grey' dendritic cells, which express only one of the two parental X chromosomes. Thus, T cells that exit the thymus will not be tolerized to X-linked antigens from the other parent (the `black' dendritic cells).</p>
+        </caption>
+        <graphic xlink:href="ar-2-5-399-2"/>
+      </fig>
+      <fig position="float" id="F3">
+        <label>Figure 3</label>
+        <caption>
+          <p>Schematic map of a portion of the first exon of the AR gene. The polymorphic CAG triplet repeat is flanked by HpaII sites, and the relative locations of primers AR1 and AR2, used for the PCR assay, are indicated.</p>
+        </caption>
+        <graphic xlink:href="ar-2-5-399-3"/>
+      </fig>
+      <fig position="float" id="F4">
+        <label>Figure 4</label>
+        <caption>
+          <p>Fluorescence-based X-inactivation using PCR-based AR methylation assay. <bold>(a)</bold> An example of equivalent inactivation (51% versus 49%) of both upper (271 bp) and lower (260 bp) alleles. <bold>(b)</bold> An example of extremely skewed inactivation (10% versus 90%) of the upper (284 bp) and lower (271 bp) alleles. Mock-digested DNA (without HpaII) was used as control for peak intensities of both alleles.</p>
+        </caption>
+        <graphic xlink:href="ar-2-5-399-4"/>
+      </fig>
+    </sec>
+  </back>
+</article>
