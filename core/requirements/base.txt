@@ -17,3 +17,4 @@ trafilatura==2.0.0
 typer==0.16.0
 qdrant-client==1.14.3
 pymupdf==1.26.1
+transformers==4.41.1
