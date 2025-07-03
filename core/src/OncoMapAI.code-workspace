@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "../qdrant_storage"
+		},
+		{
+			"path": "../docs"
 		}
 	],
 	"settings": {}

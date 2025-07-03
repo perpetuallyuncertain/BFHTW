@@ -1,0 +1,570 @@
+.
+├── .gitignore
+├── .pytest_cache
+│   ├── .gitignore
+│   ├── CACHEDIR.TAG
+│   ├── README.md
+│   └── v
+│       └── cache
+│           ├── lastfailed
+│           └── nodeids
+├── README.md
+├── core
+│   ├── .vscode
+│   │   ├── launch.json
+│   │   └── settings.json
+│   ├── libexec
+│   │   ├── messages.sh
+│   │   └── test.sh
+│   ├── pyproject.toml
+│   ├── qdrant_storage
+│   │   ├── aliases
+│   │   │   └── data.json
+│   │   ├── collections
+│   │   │   └── bio_blocks
+│   │   │       ├── 0
+│   │   │       │   ├── newest_clocks.json
+│   │   │       │   ├── replica_state.json
+│   │   │       │   ├── segments
+│   │   │       │   │   ├── 257259c6-34b7-46a4-a2b0-422cea53e74e
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000016.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000017
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   ├── OPTIONS-000019
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   ├── 41d6d082-1481-42f5-ba0b-e50b2c634e8e
+│   │   │       │   │   │   ├── mutable_id_tracker.mappings
+│   │   │       │   │   │   ├── mutable_id_tracker.versions
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000016.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000017
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   ├── OPTIONS-000019
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── chunk_0.mmap
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   ├── 44221890-b7b5-476d-afb7-cf3cc9e3800b
+│   │   │       │   │   │   ├── mutable_id_tracker.mappings
+│   │   │       │   │   │   ├── mutable_id_tracker.versions
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000012.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000013
+│   │   │       │   │   │   │   ├── OPTIONS-000011
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── chunk_0.mmap
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   ├── 75cd7bc3-d745-441f-ab0b-3d4caafd7b7a
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000016.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000017
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   ├── OPTIONS-000019
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   ├── cb7187e2-fc60-47f9-8d0d-21e07be9ea5d
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000016.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000017
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   ├── OPTIONS-000019
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   ├── cd80d42c-2093-4a14-acb7-2f2176cdf2ab
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000016.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000017
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   ├── OPTIONS-000019
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   ├── d3ea3d51-88e6-49ca-bde0-930486231e6e
+│   │   │       │   │   │   ├── mutable_id_tracker.mappings
+│   │   │       │   │   │   ├── mutable_id_tracker.versions
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000016.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000017
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   ├── OPTIONS-000019
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── chunk_0.mmap
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   ├── f56fd9df-c169-46d8-8c3e-dd2d6017f92c
+│   │   │       │   │   │   ├── payload_index
+│   │   │       │   │   │   │   ├── 000016.log
+│   │   │       │   │   │   │   ├── CURRENT
+│   │   │       │   │   │   │   ├── IDENTITY
+│   │   │       │   │   │   │   ├── LOCK
+│   │   │       │   │   │   │   ├── LOG
+│   │   │       │   │   │   │   ├── MANIFEST-000017
+│   │   │       │   │   │   │   ├── OPTIONS-000015
+│   │   │       │   │   │   │   ├── OPTIONS-000019
+│   │   │       │   │   │   │   └── config.json
+│   │   │       │   │   │   ├── payload_storage
+│   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │       │   │   │   │   ├── config.json
+│   │   │       │   │   │   │   ├── gaps.dat
+│   │   │       │   │   │   │   ├── page_0.dat
+│   │   │       │   │   │   │   └── tracker.dat
+│   │   │       │   │   │   ├── segment.json
+│   │   │       │   │   │   ├── vector_storage
+│   │   │       │   │   │   │   ├── deleted
+│   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │       │   │   │   │   │   └── status.dat
+│   │   │       │   │   │   │   └── vectors
+│   │   │       │   │   │   │       ├── config.json
+│   │   │       │   │   │   │       └── status.dat
+│   │   │       │   │   │   └── version.info
+│   │   │       │   │   └── f871a0f3-e90d-4fe1-90cc-06da4f26fe6a
+│   │   │       │   │       ├── payload_index
+│   │   │       │   │       │   ├── 000016.log
+│   │   │       │   │       │   ├── CURRENT
+│   │   │       │   │       │   ├── IDENTITY
+│   │   │       │   │       │   ├── LOCK
+│   │   │       │   │       │   ├── LOG
+│   │   │       │   │       │   ├── MANIFEST-000017
+│   │   │       │   │       │   ├── OPTIONS-000015
+│   │   │       │   │       │   ├── OPTIONS-000019
+│   │   │       │   │       │   └── config.json
+│   │   │       │   │       ├── payload_storage
+│   │   │       │   │       │   ├── bitmask.dat
+│   │   │       │   │       │   ├── config.json
+│   │   │       │   │       │   ├── gaps.dat
+│   │   │       │   │       │   ├── page_0.dat
+│   │   │       │   │       │   └── tracker.dat
+│   │   │       │   │       ├── segment.json
+│   │   │       │   │       ├── vector_storage
+│   │   │       │   │       │   ├── deleted
+│   │   │       │   │       │   │   ├── flags_a.dat
+│   │   │       │   │       │   │   └── status.dat
+│   │   │       │   │       │   └── vectors
+│   │   │       │   │       │       ├── config.json
+│   │   │       │   │       │       └── status.dat
+│   │   │       │   │       └── version.info
+│   │   │       │   ├── shard_config.json
+│   │   │       │   └── wal
+│   │   │       │       ├── first-index
+│   │   │       │       ├── open-1
+│   │   │       │       └── open-2
+│   │   │       ├── config.json
+│   │   │       ├── shard_key_mapping.json
+│   │   │       └── version.info
+│   │   ├── qdrant_storage
+│   │   │   ├── aliases
+│   │   │   │   └── data.json
+│   │   │   ├── collections
+│   │   │   │   └── bio_blocks
+│   │   │   │       ├── 0
+│   │   │   │       │   ├── newest_clocks.json
+│   │   │   │       │   ├── replica_state.json
+│   │   │   │       │   ├── segments
+│   │   │   │       │   │   ├── 30ad4fd3-f570-45a9-8bdf-93988504f26f
+│   │   │   │       │   │   │   ├── mutable_id_tracker.mappings
+│   │   │   │       │   │   │   ├── mutable_id_tracker.versions
+│   │   │   │       │   │   │   ├── payload_index
+│   │   │   │       │   │   │   │   ├── 000004.log
+│   │   │   │       │   │   │   │   ├── CURRENT
+│   │   │   │       │   │   │   │   ├── IDENTITY
+│   │   │   │       │   │   │   │   ├── LOCK
+│   │   │   │       │   │   │   │   ├── LOG
+│   │   │   │       │   │   │   │   ├── MANIFEST-000005
+│   │   │   │       │   │   │   │   ├── OPTIONS-000007
+│   │   │   │       │   │   │   │   └── config.json
+│   │   │   │       │   │   │   ├── payload_storage
+│   │   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │   │       │   │   │   │   ├── config.json
+│   │   │   │       │   │   │   │   ├── gaps.dat
+│   │   │   │       │   │   │   │   ├── page_0.dat
+│   │   │   │       │   │   │   │   └── tracker.dat
+│   │   │   │       │   │   │   ├── segment.json
+│   │   │   │       │   │   │   ├── vector_storage
+│   │   │   │       │   │   │   │   ├── deleted
+│   │   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │   │       │   │   │   │   │   └── status.dat
+│   │   │   │       │   │   │   │   └── vectors
+│   │   │   │       │   │   │   │       ├── chunk_0.mmap
+│   │   │   │       │   │   │   │       ├── config.json
+│   │   │   │       │   │   │   │       └── status.dat
+│   │   │   │       │   │   │   └── version.info
+│   │   │   │       │   │   ├── 37aeaf47-838c-4398-b9ba-888281807649
+│   │   │   │       │   │   │   ├── mutable_id_tracker.mappings
+│   │   │   │       │   │   │   ├── mutable_id_tracker.versions
+│   │   │   │       │   │   │   ├── payload_index
+│   │   │   │       │   │   │   │   ├── 000004.log
+│   │   │   │       │   │   │   │   ├── CURRENT
+│   │   │   │       │   │   │   │   ├── IDENTITY
+│   │   │   │       │   │   │   │   ├── LOCK
+│   │   │   │       │   │   │   │   ├── LOG
+│   │   │   │       │   │   │   │   ├── MANIFEST-000005
+│   │   │   │       │   │   │   │   ├── OPTIONS-000007
+│   │   │   │       │   │   │   │   └── config.json
+│   │   │   │       │   │   │   ├── payload_storage
+│   │   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │   │       │   │   │   │   ├── config.json
+│   │   │   │       │   │   │   │   ├── gaps.dat
+│   │   │   │       │   │   │   │   ├── page_0.dat
+│   │   │   │       │   │   │   │   └── tracker.dat
+│   │   │   │       │   │   │   ├── segment.json
+│   │   │   │       │   │   │   ├── vector_storage
+│   │   │   │       │   │   │   │   ├── deleted
+│   │   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │   │       │   │   │   │   │   └── status.dat
+│   │   │   │       │   │   │   │   └── vectors
+│   │   │   │       │   │   │   │       ├── chunk_0.mmap
+│   │   │   │       │   │   │   │       ├── config.json
+│   │   │   │       │   │   │   │       └── status.dat
+│   │   │   │       │   │   │   └── version.info
+│   │   │   │       │   │   ├── cf7e7870-b30d-4052-a885-cb90b87f80ff
+│   │   │   │       │   │   │   ├── mutable_id_tracker.mappings
+│   │   │   │       │   │   │   ├── mutable_id_tracker.versions
+│   │   │   │       │   │   │   ├── payload_index
+│   │   │   │       │   │   │   │   ├── 000004.log
+│   │   │   │       │   │   │   │   ├── CURRENT
+│   │   │   │       │   │   │   │   ├── IDENTITY
+│   │   │   │       │   │   │   │   ├── LOCK
+│   │   │   │       │   │   │   │   ├── LOG
+│   │   │   │       │   │   │   │   ├── MANIFEST-000005
+│   │   │   │       │   │   │   │   ├── OPTIONS-000007
+│   │   │   │       │   │   │   │   └── config.json
+│   │   │   │       │   │   │   ├── payload_storage
+│   │   │   │       │   │   │   │   ├── bitmask.dat
+│   │   │   │       │   │   │   │   ├── config.json
+│   │   │   │       │   │   │   │   ├── gaps.dat
+│   │   │   │       │   │   │   │   ├── page_0.dat
+│   │   │   │       │   │   │   │   └── tracker.dat
+│   │   │   │       │   │   │   ├── segment.json
+│   │   │   │       │   │   │   ├── vector_storage
+│   │   │   │       │   │   │   │   ├── deleted
+│   │   │   │       │   │   │   │   │   ├── flags_a.dat
+│   │   │   │       │   │   │   │   │   └── status.dat
+│   │   │   │       │   │   │   │   └── vectors
+│   │   │   │       │   │   │   │       ├── chunk_0.mmap
+│   │   │   │       │   │   │   │       ├── config.json
+│   │   │   │       │   │   │   │       └── status.dat
+│   │   │   │       │   │   │   └── version.info
+│   │   │   │       │   │   └── eac3b948-70d9-4a55-b2e7-622648dd7364
+│   │   │   │       │   │       ├── mutable_id_tracker.mappings
+│   │   │   │       │   │       ├── mutable_id_tracker.versions
+│   │   │   │       │   │       ├── payload_index
+│   │   │   │       │   │       │   ├── 000004.log
+│   │   │   │       │   │       │   ├── CURRENT
+│   │   │   │       │   │       │   ├── IDENTITY
+│   │   │   │       │   │       │   ├── LOCK
+│   │   │   │       │   │       │   ├── LOG
+│   │   │   │       │   │       │   ├── MANIFEST-000005
+│   │   │   │       │   │       │   ├── OPTIONS-000007
+│   │   │   │       │   │       │   └── config.json
+│   │   │   │       │   │       ├── payload_storage
+│   │   │   │       │   │       │   ├── bitmask.dat
+│   │   │   │       │   │       │   ├── config.json
+│   │   │   │       │   │       │   ├── gaps.dat
+│   │   │   │       │   │       │   ├── page_0.dat
+│   │   │   │       │   │       │   └── tracker.dat
+│   │   │   │       │   │       ├── segment.json
+│   │   │   │       │   │       ├── vector_storage
+│   │   │   │       │   │       │   ├── deleted
+│   │   │   │       │   │       │   │   ├── flags_a.dat
+│   │   │   │       │   │       │   │   └── status.dat
+│   │   │   │       │   │       │   └── vectors
+│   │   │   │       │   │       │       ├── chunk_0.mmap
+│   │   │   │       │   │       │       ├── config.json
+│   │   │   │       │   │       │       └── status.dat
+│   │   │   │       │   │       └── version.info
+│   │   │   │       │   ├── shard_config.json
+│   │   │   │       │   └── wal
+│   │   │   │       │       ├── first-index
+│   │   │   │       │       ├── open-1
+│   │   │   │       │       └── open-2
+│   │   │   │       ├── config.json
+│   │   │   │       ├── shard_key_mapping.json
+│   │   │   │       └── version.info
+│   │   │   ├── raft_state.json
+│   │   │   └── tmp
+│   │   └── raft_state.json
+│   ├── requirements
+│   │   ├── README.md
+│   │   └── base.txt
+│   └── src
+│       ├── BFHTW
+│       │   ├── ai_assistants
+│       │   │   ├── base
+│       │   │   │   ├── __init__.py
+│       │   │   │   ├── base_assistant.py
+│       │   │   │   ├── base_local_assistant.py
+│       │   │   │   └── factory.py
+│       │   │   ├── external
+│       │   │   │   └── __init__.py
+│       │   │   ├── internal
+│       │   │   │   ├── __init__.py
+│       │   │   │   └── bio_bert
+│       │   │   │       ├── __init__.py
+│       │   │   │       ├── biobert_embeddings.py
+│       │   │   │       ├── biobert_ner.py
+│       │   │   │       └── label_map.json
+│       │   │   ├── openai_assistant.py
+│       │   │   ├── openai_rag_assistant.py
+│       │   │   └── system_prompt.txt
+│       │   ├── app
+│       │   ├── data
+│       │   │   └── database.db
+│       │   ├── infrastructure
+│       │   │   ├── README.md
+│       │   │   └── sh
+│       │   │       ├── README.md
+│       │   │       ├── create-dev-machine.sh
+│       │   │       ├── destroy-dev-machine.sh
+│       │   │       ├── dev-vm-config.sh
+│       │   │       ├── save_env.sh
+│       │   │       ├── setup-dev-vm.sh
+│       │   │       ├── setup-qdrant.sh
+│       │   │       ├── ssh-keys.txt
+│       │   │       └── users.json
+│       │   ├── models
+│       │   │   ├── README.md
+│       │   │   ├── __init__.py
+│       │   │   ├── bio_medical_entity_block.py
+│       │   │   ├── block_model.py
+│       │   │   ├── blocks.py
+│       │   │   ├── document_main.py
+│       │   │   ├── meta_model.py
+│       │   │   ├── nxml_models.py
+│       │   │   ├── pdf_models.py
+│       │   │   ├── pubmed_pmc.py
+│       │   │   └── qdrant.py
+│       │   ├── pipelines
+│       │   │   ├── __init__.py
+│       │   │   ├── pubmed_download_and_parse.py
+│       │   │   └── pubmed_fetch_metadata.py
+│       │   ├── sources
+│       │   │   ├── __init__.py
+│       │   │   └── pubmed_pmc
+│       │   │       ├── __init__.py
+│       │   │       ├── data
+│       │   │       │   ├── PMC-ids_2025-06-16.csv.gz
+│       │   │       │   ├── PMC-ids_2025-06-18.csv.gz
+│       │   │       │   ├── PMC-ids_2025-06-20.csv.gz
+│       │   │       │   ├── PMC-ids_2025-06-22.csv.gz
+│       │   │       │   ├── oa_file_list_2025-06-16.csv
+│       │   │       │   ├── oa_file_list_2025-06-18.csv
+│       │   │       │   ├── oa_file_list_2025-06-20.csv
+│       │   │       │   └── oa_file_list_2025-06-22.csv
+│       │   │       ├── fetch
+│       │   │       │   ├── __init__.py
+│       │   │       │   ├── base_fetcher.py
+│       │   │       │   ├── fetch_PMCID_mapping.py
+│       │   │       │   ├── fetch_file_list.py
+│       │   │       │   ├── fetch_xml_paths.py
+│       │   │       │   └── pmc_article_downloader.py
+│       │   │       ├── fetch_abstracts.py
+│       │   │       ├── merge_article_paths_with_pmids.py
+│       │   │       ├── pmc_api_client.py
+│       │   │       ├── search_terms.json
+│       │   │       └── temp
+│       │   │           ├── extract_PMC17774
+│       │   │           │   ├── PMC17774
+│       │   │           │   │   ├── ar-1-1-063-1.gif
+│       │   │           │   │   ├── ar-1-1-063-1.jpg
+│       │   │           │   │   ├── ar-1-1-063-2.gif
+│       │   │           │   │   ├── ar-1-1-063-2.jpg
+│       │   │           │   │   ├── ar-1-1-063-3.gif
+│       │   │           │   │   ├── ar-1-1-063-3.jpg
+│       │   │           │   │   ├── ar-1-1-063-4.gif
+│       │   │           │   │   ├── ar-1-1-063-4.jpg
+│       │   │           │   │   ├── ar-1-1-063.nxml
+│       │   │           │   │   └── ar-1-1-063.pdf
+│       │   │           │   └── PMC17774.tar.gz
+│       │   │           ├── extract_PMC17816
+│       │   │           │   ├── PMC17816
+│       │   │           │   │   ├── ar-2-5-399-1.gif
+│       │   │           │   │   ├── ar-2-5-399-1.jpg
+│       │   │           │   │   ├── ar-2-5-399-2.gif
+│       │   │           │   │   ├── ar-2-5-399-2.jpg
+│       │   │           │   │   ├── ar-2-5-399-3.gif
+│       │   │           │   │   ├── ar-2-5-399-3.jpg
+│       │   │           │   │   ├── ar-2-5-399-4.gif
+│       │   │           │   │   ├── ar-2-5-399-4.jpg
+│       │   │           │   │   ├── ar-2-5-399.nxml
+│       │   │           │   │   └── ar-2-5-399.pdf
+│       │   │           │   └── PMC17816.tar.gz
+│       │   │           └── extract_PMC28999
+│       │   │               ├── PMC28999
+│       │   │               │   └── cc-2-1-029.nxml
+│       │   │               └── PMC28999.tar.gz
+│       │   ├── tests
+│       │   │   ├── db
+│       │   │   │   ├── __init__.py
+│       │   │   │   ├── test_create.py
+│       │   │   │   ├── test_fetch.py
+│       │   │   │   └── test_get_unprocessed.py
+│       │   │   └── pubmed_pmc
+│       │   │       ├── __init__.py
+│       │   │       ├── test_fetch_PMID_mapping.py
+│       │   │       ├── test_fetch_file_list.py
+│       │   │       └── test_fetch_xml_paths.py
+│       │   └── utils
+│       │       ├── __init__.py
+│       │       ├── crud
+│       │       │   ├── __init__.py
+│       │       │   └── crud.py
+│       │       ├── db
+│       │       │   ├── __init__.py
+│       │       │   ├── document_register.py
+│       │       │   └── sql_connection_wrapper.py
+│       │       ├── io
+│       │       │   ├── __init__.py
+│       │       │   └── tarball_fetcher.py
+│       │       ├── logs.py
+│       │       ├── nxml
+│       │       │   ├── __init__.py
+│       │       │   ├── base_parser.py
+│       │       │   ├── nxml_parser.py
+│       │       │   └── pubmed_parser.py
+│       │       ├── pdf
+│       │       │   ├── __init__.py
+│       │       │   ├── pdf_block_extractor.py
+│       │       │   └── pdf_metadata.py
+│       │       └── qdrant
+│       │           ├── __init__.py
+│       │           ├── check_duplicates.py
+│       │           ├── qdrant_crud.py
+│       │           └── wsl-apt-packages.txt
+│       ├── OncoMapAI.code-workspace
+│       ├── README.md
+│       ├── biomed_schema.png
+│       ├── mkdocs.yml
+│       └── test_nxml.txt
+├── dev.txt
+├── file_tree.txt
+├── pytest.ini
+├── requirements.txt
+└── structure.txt
+
+134 directories, 433 files

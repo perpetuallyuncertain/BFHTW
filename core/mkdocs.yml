@@ -1,0 +1,21 @@
+site_name: Bio AI Docs
+theme:
+  name: readthedocs
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+            show_root_heading: true
+            separate_signature: true
+            docstring_style: google
+            extra:
+              paths: ["src"]
+
+nav:
+  - Home: index.md
+  - API Reference:
+      - BFHTW: reference/bfhtw.md

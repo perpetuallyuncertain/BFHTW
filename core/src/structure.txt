@@ -1,0 +1,62 @@
+BFHTW/
+├── app/                       ← Frontend (Streamlit or FastAPI)
+│   ├── main.py
+│   └── components/            ← Custom widgets or modular pages
+│
+├── router/                    ← Entry point for chat queries
+│   └── chat_router.py
+│
+├── assistant/                 ← OpenAI assistant orchestration
+│   ├── runner.py
+│   ├── event_handler.py
+│   └── prompts/
+│       └── system_prompt.txt
+│
+├── retriever/                 ← Qdrant-powered search
+│   ├── search.py              ← retrieve_relevant_blocks()
+│   └── context_builder.py     ← builds final context string for LLM
+│
+├── nlp/                       ← ML/NLP processing layer
+│   ├── models/
+│   │   └── biobert.py         ← Tokenizer/model wrapper
+│   ├── ner/
+│   │   └── extractor.py       ← entity/keyword NER
+│   ├── embedding/
+│   │   └── biobert_embedder.py
+│   └── processor.py           ← NLPProcessor coordinates NER + embeddings
+│
+├── ingest/                    ← Data import, parsing, NLP pipelines
+│   ├── read_pdf.py
+│   ├── nlp_pipeline.py
+│   └── index_embeddings.py
+│
+├── storage/                   ← DB and Qdrant access
+│   ├── sql_client.py
+│   └── qdrant_client.py
+│
+├── models/                    ← Pydantic data contracts
+│   ├── blocks.py
+│   ├── articles.py
+│   ├── keywords.py
+│   ├── retrieval.py
+│   └── assistant_io.py
+│
+├── sources/                   ← PubMed + PMC integration
+│   ├── pubmed_pmc/
+│   │   └── api_client.py
+│   └── xml_processing/
+│       └── fetch_nxml.py
+│
+├── utils/                     ← Logging, file ops, hashing, etc.
+│   ├── logs.py
+│   ├── file_io.py
+│   └── hashing.py
+│
+├── tests/
+│   └── test_*.py
+│
+├── scripts/                   ← CLI runners or notebook pipelines
+│   └── index_all.py
+│
+├── requirements.txt
+└── pyproject.toml
