@@ -8,20 +8,33 @@ and generate Markdown documentation.
 
 import os
 from pathlib import Path
+from pydantic import BaseModel
 from BFHTW.ai_assistants.external.open_ai.openai_assistant import OpenAIAssistant
+from BFHTW.utils.logs import get_logger
+
+L = get_logger()
+
+class MarkdownResponse(BaseModel):
+    markdown: str
+
+    @classmethod
+    def null_response(cls) -> "MarkdownResponse":
+        return cls(markdown="")
 
 # ────────────────────────────────────────────────────────────────
 # Settings
-PROJECT_ROOT = Path(__file__).resolve().parent.parent / "src" / "BFHTW"
+PROJECT_ROOT = Path(__file__).resolve().parents[3] / "BFHTW"
 EXCLUDE_MARKER = ".no-readme"
 README_FILENAME = "README.md"
 VALID_EXTENSIONS = (".py", ".md", ".txt", ".json", ".yaml", ".toml")
 
 # Hardcoded system prompt
 SYSTEM_PROMPT = (
-    "You are an expert documentation generator. Your task is to read the contents "
-    "of source code files and generate a clear, concise, and informative README.md file "
-    "describing the purpose, contents, and structure of the folder."
+    """You are an expert documentation generator. Your task is to read the contents 
+    of source code files and generate a clear, concise, and informative README.md file 
+    describing the purpose, contents, and structure of the folder.
+    ***Respond in markdown format***
+    """
 )
 
 # ────────────────────────────────────────────────────────────────
@@ -56,12 +69,12 @@ def generate_readmes(assistant: OpenAIAssistant):
             continue
 
         user_prompt = f"{SYSTEM_PROMPT}\n\n{folder_content}"
-        response, cost = assistant.analyse(user_prompt, structured_output=False)
+        response, cost = assistant.analyse(user_prompt, structured_output=True)
 
         if response:
             readme_path = os.path.join(dirpath, README_FILENAME)
             with open(readme_path, 'w', encoding='utf-8') as f:
-                f.write(response.strip())
+                f.write(response.markdown.strip())
             print(f"README.md created — Cost: ${cost:.4f}")
         else:
             print("Failed to generate README")
@@ -71,6 +84,6 @@ if __name__ == "__main__":
     assistant = OpenAIAssistant(
         name="ReadmeBot",
         sys_content=SYSTEM_PROMPT,
-        response_model=str  # No structured output needed, just markdown text
+        response_model=MarkdownResponse  # No structured output needed, just markdown text
     )
     generate_readmes(assistant)

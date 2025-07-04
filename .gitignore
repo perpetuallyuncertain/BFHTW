@@ -23,3 +23,6 @@ core/src/BFHTW/test_data
 
 # Qdrant data
 core/qdrant_storage
+
+# Docs
+core/sites

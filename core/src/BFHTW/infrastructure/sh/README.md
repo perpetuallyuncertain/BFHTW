@@ -1,98 +1,42 @@
-# FARTSICORN DEV VM – GCP Setup
+# SSH Key Management
 
-This project includes automation scripts to provision, configure, and tear down a GCP-based development VM for the TIQ AI project.
+This repository contains files related to SSH key management for users. It includes user information and their associated public SSH keys, which are essential for secure access to servers and services.
 
----
+## Contents
 
-## 🚀 Prerequisites
+The folder contains the following files:
 
-1. **Install the Google Cloud CLI**  
-   👉 [Installation guide](https://cloud.google.com/sdk/docs/install)
+- `users.json`: A JSON file that stores user details, including usernames and their associated public SSH keys.
+- `ssh-keys.txt`: A plain text file that lists SSH keys in a simple format, associating each key with a username.
 
-2. **Authenticate with GCP**
-   ```bash
-   gcloud auth login
-   ```
+## File Descriptions
 
-3. **Set your default GCP project**
-   ```bash
-   gcloud config set project YOUR_PROJECT_ID
-   ```
+### `users.json`
+This file contains an array of user objects. Each user object includes:
+- `username`: The username of the individual.
+- `public_keys`: An array of public SSH keys associated with the user. Each key is represented as a string.
 
-4. **Enable the Compute Engine API (first time only)**
-   ```bash
-   gcloud services enable compute.googleapis.com
-   ```
-
----
-
-## 📂 Project Structure
-
-```text
-infrastructure/
-├── sh/
-│   ├── create-dev-vm.sh       # One-touch VM provisioning
-│   ├── destroy-dev-vm.sh      # Optional: Destroys the VM
-│   ├── setup-dev-vm.sh        # Runs on the VM to configure it
-│   └── users.json             # List of users and SSH keys to provision
+**Example Structure:**
+```json
+[
+    {
+        "username": "steven",
+        "public_keys": [
+            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDNlyJ6NOrZQxHMy0VOteclI6iYsZb0X95svaxCSKyEVjsnF3qFUIzaZGF7f6T+X2kUMsMteQPJ3AyHSgfgljfgaw6kk5Zq36FkrdNEsi1EVVEhVc1QpEKNq2eSnmfHUIUAStlwp0kjlJ15FIV26lRAdDyOjvH+W0bWs5iQ1LwEHAABXk0J5o/GlDAE45EY+qvow0tcbS9tOh73gT+1VgnAMg7652cFLniIV10wDjVjKJ2Wr4q4b1vAXBC9s9tZktjAtRiZccn/JwTwUwl6jB8mXHvMPveJALXek4vNPDbrFF6+LuAD/rXGVGHlkmXNIXoJut3a3uBBm+LNAoalsnAVeYRsY3N0Yw8nbtewdJtS4NOnjX38qqNhfHsmAoaJjTFb/iYmMKZmjAvQC2nnS4CBZ5WhfBjW1eSwxBKDnP2m8BJmDhtr1NswXCXrwnlGc1LGPqywW8xYONrPgegPSmy71rlO35umI49s7Lr+D07EQRifPzwa6RY3+f6NJAxpEmh1nk8xk2GIgRisSd0+zxJpPjid/RQUmuFmgMzTXHMc/qzqvSGjAOTmzPompXdcJY3Of84pNwEVGL3+wViMUEgXAI4HdU/q6Dk5nyZhnaNbmKSmknZA/eIJJmjWydpY/jIxLuBZrYkauH43lyzzfPd4gDrLDURworFcTcqe1XaLJw== steven@fartsicorn.dev"
+        ]
+    }
+]
 ```
 
----
+### `ssh-keys.txt`
+This file contains a simple list of usernames and their corresponding public SSH keys, formatted as follows:
+- Each line contains a username followed by a colon and the public key string.
 
-## 🛠 VM Provisioning
-
-To spin up a dev VM:
-
-```bash
-cd infrastructure/sh
-./create-dev-vm.sh
+**Example Entry:**
+```
+steven:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDNlyJ6NOrZQxHMy0VOteclI6iYsZb0X95svaxCSKyEVjsnF3qFUIzaZGF7f6T+X2kUMsMteQPJ3AyHSgfgljfgaw6kk5Zq36FkrdNEsi1EVVEhVc1QpEKNq2eSnmfHUIUAStlwp0kjlJ15FIV26lRAdDyOjvH+W0bWs5iQ1LwEHAABXk0J5o/GlDAE45EY+qvow0tcbS9tOh73gT+1VgnAMg7652cFLniIV10wDjVjKJ2Wr4q4b1vAXBC9s9tZktjAtRiZccn/JwTwUwl6jB8mXHvMPveJALXek4vNPDbrFF6+LuAD/rXGVGHlkmXNIXoJut3a3uBBm+LNAoalsnAVeYRsY3N0Yw8nbtewdJtS4NOnjX38qqNhfHsmAoaJjTFb/iYmMKZmjAvQC2nnS4CBZ5WhfBjW1eSwxBKDnP2m8BJmDhtr1NswXCXrwnlGc1LGPqywW8xYONrPgegPSmy71rlO35umI49s7Lr+D07EQRifPzwa6RY3+f6NJAxpEmh1nk8xk2GIgRisSd0+zxJpPjid/RQUmuFmgMzTXHMc/qzqvSGjAOTmzPompXdcJY3Of84pNwEVGL3+wViMUEgXAI4HdU/q6Dk5nyZhnaNbmKSmknZA/eIJJmjWydpY/jIxLuBZrYkauH43lyzzfPd4gDrLDURworFcTcqe1XaLJw== steven@fartsicorn.dev
 ```
 
-This will:
-- Create the VM with your config
-- Attach a static IP
-- SSH into the VM and run the setup script (`setup-dev-vm.sh`)
-- Configure users and dev packages
+## Usage
 
-You’ll see output like:
-
-```text
-🌐 Instance created: tiqai-dev
-🔐 You can connect using:
-ssh yourname@34.82.101.22
-```
-
----
-
-## 🔧 What the Setup Script Does
-
-Once the VM is running, the `setup-dev-vm.sh` script will:
-
-- Apply system updates
-- Install dev packages (Python, Docker, SQLite, etc.)
-- Add user accounts from `users.json`
-- Harden SSH access (no root login, key-only auth)
-- Enable unattended upgrades and fail2ban
-
----
-
-## 🧨 Tear Down the VM (Optional)
-
-If you want to destroy the VM and associated resources:
-
-```bash
-./destroy-dev-vm.sh
-```
-
-> This script is optional. If not present, you can destroy manually:
-```bash
-gcloud compute instances delete tiqai-dev --zone=australia-southeast1-b
-```
-
----
-
-## 📝 Customizing Your Setup
-
-- Update package installs in `setup-dev-vm.sh`
-- Add or modify users in `users.json`
-- Edit VM config (name, zone, machine type) directly in `create-dev-vm.sh`
+This repository can be used for managing SSH keys for users in a structured manner. The JSON format allows for easy integration with applications that require user authentication, while the text file format provides a simple way to view and edit keys manually.
