@@ -34,11 +34,11 @@ class PipelineConfig:
     pipeline_class: str
     enabled: bool = True
     schedule_type: ScheduleType = ScheduleType.MANUAL
-    schedule_params: Dict[str, Any] = None
+    schedule_params: Optional[Dict[str, Any]] = None
     max_runtime_minutes: int = 60
     retry_attempts: int = 3
-    parameters: Dict[str, Any] = None
-    dependencies: List[str] = None
+    parameters: Optional[Dict[str, Any]] = None
+    dependencies: Optional[List[str]] = None
     
     def __post_init__(self):
         if self.schedule_params is None:
@@ -107,7 +107,7 @@ class PipelineManager:
         default_config = {
             'pipelines': {
                 'pubmed_metadata': {
-                    'pipeline_class': 'BFHTW.pipelines.pubmed_metadata_pipeline.PubMedMetadataPipeline',
+                    'pipeline_class': 'BFHTW.pipelines.pubmed_pmc.pubmed_metadata_pipeline.PubMedMetadataPipeline',
                     'enabled': True,
                     'schedule_type': 'daily',
                     'schedule_params': {'time': '02:00'},

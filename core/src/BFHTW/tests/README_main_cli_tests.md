@@ -49,49 +49,49 @@ python -m pytest tests/test_main_cli.py -v -s
 
 ## Test Features
 
-### 🎯 **Limited Data Processing**
+### **Limited Data Processing**
 - **Max Articles**: 2-10 (vs normal 1000+)
 - **Batch Size**: 1-5 (vs normal 100+)
 - **AI Processing**: Disabled for speed
 - **Embeddings**: Disabled for speed
 - **Validation**: Lenient mode
 
-### 🔧 **CLI Commands Tested**
+### **CLI Commands Tested**
 1. **`run pubmed_metadata`** - PubMed article metadata extraction
 2. **`run document_processing`** - Document parsing and processing
 3. **`scheduler`** - Background pipeline scheduling
 4. **`status`** - Pipeline status monitoring
 5. **`list`** - Available pipeline listing
 
-### 📊 **Test Scenarios**
-- ✅ **Success Cases**: Valid commands with expected results
-- ❌ **Failure Cases**: Invalid pipelines, missing parameters
-- 🔄 **Integration**: End-to-end pipeline execution
-- ⚡ **Performance**: Execution time measurement
+### **Test Scenarios**
+- **Success Cases**: Valid commands with expected results
+- **Failure Cases**: Invalid pipelines, missing parameters
+- **Integration**: End-to-end pipeline execution
+- **Performance**: Execution time measurement
 
 ## Sample Output
 
 ```bash
-🧪 MAIN.PY CLI DEMONSTRATION WITH LIMITED DATA
+MAIN.PY CLI DEMONSTRATION WITH LIMITED DATA
 ================================================================================
 
-📝 Test 1/7: Show Help
-🔧 Running: python -m BFHTW.pipelines.main --help
+Test 1/7: Show Help
+Running: python -m BFHTW.pipelines.main --help
 ------------------------------------------------------------
 STDOUT:
 usage: main.py [-h] {run,scheduler,status,list} ...
 ...
-✅ PASS (took 0.23s)
+PASS (took 0.23s)
 
-📝 Test 2/7: Run PubMed Metadata (Limited)
-🔧 Running: python -m BFHTW.pipelines.main run pubmed_metadata --max-articles 3 --batch-size 2 --lenient
+Test 2/7: Run PubMed Metadata (Limited)
+Running: python -m BFHTW.pipelines.main run pubmed_metadata --max-articles 3 --batch-size 2 --lenient
 ------------------------------------------------------------
 {"message": "Running pipeline: pubmed_metadata", "level": "INFO"}
 {"message": "Pipeline completed successfully", "level": "INFO"}
 Processed: 3
 Failed: 0
 Execution time: 12.50s
-✅ PASS (took 12.75s)
+PASS (took 12.75s)
 ```
 
 ## Configuration Details
@@ -175,4 +175,4 @@ These tests are designed to be:
 - **Isolated** (no external API dependencies for core tests)
 - **Comprehensive** (all CLI commands covered)
 
-Perfect for automated testing in CI/CD pipelines! 🚀
+Perfect for automated testing in CI/CD pipelines!

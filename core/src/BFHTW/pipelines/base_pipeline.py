@@ -1,54 +1,67 @@
 """
-Base pipeline framework for multi-source data processing with robust validation.
+Core pipeline framework providing abstract base classes and utilities.
 
-Provides abstract base classes and common patterns for creating data processing
-pipelines that are extensible, testable, and source-agnostic.
+Provides the foundational architecture for robust, validated, and extensible 
+biomedical data processing pipelines.
 """
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Optional, Type, Generic, TypeVar
-from pydantic import BaseModel, ValidationError
-from dataclasses import dataclass
+from typing import Generic, TypeVar, List, Dict, Any, Optional, Iterator, Union
+from dataclasses import dataclass, field
 from enum import Enum
-import time
 from datetime import datetime
-from uuid import uuid4
+import uuid
+import time
 
 from BFHTW.utils.logs import get_logger
-from BFHTW.utils.crud.crud import CRUD
 
 L = get_logger()
 
-# Type variables for generic pipeline components
-SourceDataT = TypeVar('SourceDataT')
-ProcessedDataT = TypeVar('ProcessedDataT', bound=BaseModel)
+# Type variables for generic pipeline implementation
+InputType = TypeVar('InputType')
+OutputType = TypeVar('OutputType')
 
 class PipelineStatus(Enum):
-    """Pipeline execution status values."""
-    PENDING = "pending"
+    """Pipeline execution status."""
     RUNNING = "running"
     SUCCESS = "success"
     FAILED = "failed"
     CANCELLED = "cancelled"
 
 @dataclass
-class PipelineResult:
-    """Standard pipeline execution result."""
-    pipeline_id: str
-    status: PipelineStatus
-    processed_count: int
-    failed_count: int
-    execution_time: float
-    errors: List[str]
-    metadata: Dict[str, Any]
-
-@dataclass
 class ValidationResult:
-    """Data validation result."""
+    """Result of data validation."""
     is_valid: bool
-    errors: List[str]
-    warnings: List[str]
-    score: Optional[float] = None
+    errors: List[str] = field(default_factory=list)
+    warnings: List[str] = field(default_factory=list)
+    
+    def add_error(self, error: str):
+        """Add validation error."""
+        self.errors.append(error)
+        self.is_valid = False
+    
+    def add_warning(self, warning: str):
+        """Add validation warning."""
+        self.warnings.append(warning)
+
+@dataclass 
+class PipelineResult:
+    """Result of pipeline execution."""
+    status: PipelineStatus
+    processed_count: int = 0
+    failed_count: int = 0
+    execution_time: float = 0.0
+    errors: List[str] = field(default_factory=list)
+    warnings: List[str] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+class DataValidator(ABC):
+    """Abstract base class for data validators."""
+    
+    @abstractmethod
+    def validate(self, data: Any) -> ValidationResult:
+        """Validate data and return validation result."""
+        pass
 
 class DataSource(ABC):
     """Abstract base class for data sources."""
@@ -59,235 +72,145 @@ class DataSource(ABC):
         pass
     
     @abstractmethod
-    def fetch_metadata(self) -> List[Dict[str, Any]]:
-        """Fetch metadata from the source."""
-        pass
-    
-    @abstractmethod
     def validate_connection(self) -> bool:
         """Validate connection to data source."""
         pass
-
-class DataValidator(ABC):
-    """Abstract base class for data validators."""
     
     @abstractmethod
-    def validate(self, data: Any) -> ValidationResult:
-        """Validate data and return validation result."""
+    def fetch_metadata(self) -> List[Dict[str, Any]]:
+        """Fetch metadata from data source."""
         pass
 
-class BasePipeline(ABC, Generic[SourceDataT, ProcessedDataT]):
+class BasePipeline(Generic[InputType, OutputType], ABC):
     """
-    Base class for all data processing pipelines.
+    Abstract base class for all processing pipelines.
     
-    Provides common functionality for:
-    - Data source management
-    - Validation framework
-    - Error handling and logging
-    - Progress tracking
-    - Transaction management
+    Provides comprehensive pipeline lifecycle management including:
+    - Standardized execution flow
+    - Batch processing with progress tracking
+    - Error handling and recovery
+    - Validation integration
+    - Result tracking and metrics
     """
     
     def __init__(
         self,
         name: str,
         source: DataSource,
-        validators: Optional[List[DataValidator]] = None,
+        validators: List[DataValidator],
         batch_size: int = 100,
         max_retries: int = 3
     ):
         self.name = name
         self.source = source
-        self.validators = validators or []
+        self.validators = validators
         self.batch_size = batch_size
         self.max_retries = max_retries
-        self.pipeline_id = str(uuid4())
+        self.pipeline_id = str(uuid.uuid4())
         
+    @abstractmethod
+    def process_item(self, item: InputType) -> Optional[OutputType]:
+        """Process a single item."""
+        pass
+    
+    @abstractmethod
+    def store_item(self, item: OutputType) -> bool:
+        """Store processed item."""
+        pass
+    
+    def validate_item(self, item: Any) -> ValidationResult:
+        """Validate item using configured validators."""
+        result = ValidationResult(is_valid=True)
+        
+        for validator in self.validators:
+            validation = validator.validate(item)
+            if not validation.is_valid:
+                result.is_valid = False
+                result.errors.extend(validation.errors)
+            result.warnings.extend(validation.warnings)
+        
+        return result
+    
     def run(self) -> PipelineResult:
-        """Execute the complete pipeline with error handling and logging."""
+        """Execute the complete pipeline."""
         start_time = time.time()
-        processed_count = 0
-        failed_count = 0
-        errors = []
+        result = PipelineResult(status=PipelineStatus.RUNNING)
         
-        L.info(f"Starting pipeline {self.name} (ID: {self.pipeline_id})")
+        L.info(f"Starting pipeline: {self.name} (ID: {self.pipeline_id})")
         
         try:
-            # Pre-flight validation
+            # Validate data source connection
             if not self.source.validate_connection():
                 raise ConnectionError(f"Cannot connect to data source: {self.source.get_identifier()}")
             
-            # Get data from source
-            source_data = self.source.fetch_metadata()
-            L.info(f"Retrieved {len(source_data)} items from {self.source.get_identifier()}")
+            # Fetch data from source
+            raw_data = self.source.fetch_metadata()
+            L.info(f"Fetched {len(raw_data)} items from {self.source.get_identifier()}")
             
-            # Process in batches
-            for batch_start in range(0, len(source_data), self.batch_size):
-                batch_end = min(batch_start + self.batch_size, len(source_data))
-                batch = source_data[batch_start:batch_end]
-                
-                batch_result = self._process_batch(batch)
-                processed_count += batch_result.processed_count
-                failed_count += batch_result.failed_count
-                errors.extend(batch_result.errors)
-                
-                L.info(f"Processed batch {batch_start//self.batch_size + 1}: "
-                      f"{batch_result.processed_count} success, {batch_result.failed_count} failed")
+            # Process data in batches
+            total_items = len(raw_data)
+            processed = 0
+            failed = 0
             
-            status = PipelineStatus.SUCCESS if failed_count == 0 else PipelineStatus.FAILED
+            for i in range(0, total_items, self.batch_size):
+                batch = raw_data[i:i + self.batch_size]
+                batch_num = (i // self.batch_size) + 1
+                total_batches = (total_items + self.batch_size - 1) // self.batch_size
+                
+                L.info(f"Processing batch {batch_num}/{total_batches} ({len(batch)} items)")
+                
+                for item in batch:
+                    try:
+                        # Validate input
+                        validation = self.validate_item(item)
+                        if not validation.is_valid:
+                            L.warning(f"Validation failed for item: {validation.errors}")
+                            result.warnings.extend(validation.errors)
+                            failed += 1
+                            continue
+                        
+                        # Process item
+                        processed_item = self.process_item(item)
+                        if processed_item is None:
+                            failed += 1
+                            continue
+                        
+                        # Store result
+                        if self.store_item(processed_item):
+                            processed += 1
+                        else:
+                            failed += 1
+                            
+                    except Exception as e:
+                        error_msg = f"Error processing item: {str(e)}"
+                        L.error(error_msg)
+                        result.errors.append(error_msg)
+                        failed += 1
+            
+            # Set final status
+            if failed == 0:
+                result.status = PipelineStatus.SUCCESS
+            elif processed > 0:
+                result.status = PipelineStatus.SUCCESS  # Partial success
+                result.warnings.append(f"Pipeline completed with {failed} failures")
+            else:
+                result.status = PipelineStatus.FAILED
+            
+            result.processed_count = processed
+            result.failed_count = failed
+            result.execution_time = time.time() - start_time
+            
+            L.info(f"Pipeline completed: {result.status.value}")
+            L.info(f"  Processed: {processed}")
+            L.info(f"  Failed: {failed}")
+            L.info(f"  Execution time: {result.execution_time:.2f} seconds")
+            
+            return result
             
         except Exception as e:
-            L.error(f"Pipeline {self.name} failed with error: {str(e)}")
-            errors.append(str(e))
-            status = PipelineStatus.FAILED
-        
-        execution_time = time.time() - start_time
-        
-        result = PipelineResult(
-            pipeline_id=self.pipeline_id,
-            status=status,
-            processed_count=processed_count,
-            failed_count=failed_count,
-            execution_time=execution_time,
-            errors=errors,
-            metadata={
-                "source": self.source.get_identifier(),
-                "batch_size": self.batch_size,
-                "total_items": len(source_data) if 'source_data' in locals() else 0
-            }
-        )
-        
-        self._log_result(result)
-        return result
-    
-    def _process_batch(self, batch: List[SourceDataT]) -> PipelineResult:
-        """Process a batch of items with validation and error handling."""
-        processed_count = 0
-        failed_count = 0
-        errors = []
-        
-        for item in batch:
-            try:
-                # Validate input data
-                validation_result = self._validate_item(item)
-                if not validation_result.is_valid:
-                    errors.extend(validation_result.errors)
-                    failed_count += 1
-                    continue
-                
-                # Process item
-                processed_item = self.process_item(item)
-                
-                # Validate output
-                if processed_item:
-                    self.store_item(processed_item)
-                    processed_count += 1
-                else:
-                    failed_count += 1
-                    errors.append(f"Processing returned None for item: {item}")
-                    
-            except ValidationError as e:
-                errors.append(f"Validation error: {str(e)}")
-                failed_count += 1
-            except Exception as e:
-                errors.append(f"Processing error: {str(e)}")
-                failed_count += 1
-        
-        return PipelineResult(
-            pipeline_id=self.pipeline_id,
-            status=PipelineStatus.SUCCESS if failed_count == 0 else PipelineStatus.FAILED,
-            processed_count=processed_count,
-            failed_count=failed_count,
-            execution_time=0,  # Individual batch time not tracked
-            errors=errors,
-            metadata={}
-        )
-    
-    def _validate_item(self, item: SourceDataT) -> ValidationResult:
-        """Run all validators on an item."""
-        all_errors = []
-        all_warnings = []
-        
-        for validator in self.validators:
-            result = validator.validate(item)
-            all_errors.extend(result.errors)
-            all_warnings.extend(result.warnings)
-        
-        return ValidationResult(
-            is_valid=len(all_errors) == 0,
-            errors=all_errors,
-            warnings=all_warnings
-        )
-    
-    def _log_result(self, result: PipelineResult):
-        """Log pipeline execution results."""
-        if result.status == PipelineStatus.SUCCESS:
-            L.info(f"Pipeline {self.name} completed successfully: "
-                  f"{result.processed_count} processed in {result.execution_time:.2f}s")
-        else:
-            L.error(f"Pipeline {self.name} failed: "
-                   f"{result.processed_count} processed, {result.failed_count} failed")
-            for error in result.errors[:5]:  # Log first 5 errors
-                L.error(f"Error: {error}")
-    
-    @abstractmethod
-    def process_item(self, item: SourceDataT) -> Optional[ProcessedDataT]:
-        """Process a single item from source data to target model."""
-        pass
-    
-    @abstractmethod
-    def store_item(self, item: ProcessedDataT) -> bool:
-        """Store processed item in database/storage."""
-        pass
-
-class DatabaseValidator(DataValidator):
-    """Validator for database schema compliance."""
-    
-    def __init__(self, model: Type[BaseModel]):
-        self.model = model
-    
-    def validate(self, data: Any) -> ValidationResult:
-        """Validate data against Pydantic model."""
-        try:
-            self.model(**data) if isinstance(data, dict) else self.model.model_validate(data)
-            return ValidationResult(is_valid=True, errors=[], warnings=[])
-        except ValidationError as e:
-            return ValidationResult(
-                is_valid=False,
-                errors=[str(error) for error in e.errors()],
-                warnings=[]
-            )
-
-class ContentQualityValidator(DataValidator):
-    """Validator for content quality metrics."""
-    
-    def __init__(self, min_text_length: int = 50, required_fields: Optional[List[str]] = None):
-        self.min_text_length = min_text_length
-        self.required_fields = required_fields or []
-    
-    def validate(self, data: Any) -> ValidationResult:
-        """Validate content quality."""
-        errors = []
-        warnings = []
-        
-        # Check required fields
-        if isinstance(data, dict):
-            for field in self.required_fields:
-                if field not in data or not data[field]:
-                    errors.append(f"Missing required field: {field}")
-        
-        # Check text length if text field exists
-        text_content = ""
-        if isinstance(data, dict) and 'text' in data:
-            text_content = data['text']
-        elif hasattr(data, 'text'):
-            text_content = data.text
-        
-        if text_content and len(text_content.strip()) < self.min_text_length:
-            warnings.append(f"Text content too short: {len(text_content)} < {self.min_text_length}")
-        
-        return ValidationResult(
-            is_valid=len(errors) == 0,
-            errors=errors,
-            warnings=warnings
-        )
+            error_msg = f"Pipeline failed: {str(e)}"
+            L.error(error_msg)
+            result.status = PipelineStatus.FAILED
+            result.errors.append(error_msg)
+            result.execution_time = time.time() - start_time
+            return result

@@ -13,7 +13,7 @@ from urllib.parse import urljoin
 from BFHTW.pipelines.base_pipeline import BasePipeline, PipelineResult
 from BFHTW.pipelines.data_sources import DatabaseSource
 from BFHTW.pipelines.validation import create_biomedical_document_validators, CompositeValidator
-from BFHTW.models.pubmed_pmc import PMCArticleMetadata
+from BFHTW.models.document_main import Document
 from BFHTW.models.pdf_models import PDFMetadata, PDFBlock
 from BFHTW.models.nxml_models import NXMLMetadata, NXMLBlock
 from BFHTW.models.bio_medical_entity_block import BiomedicalEntityBlock
@@ -31,12 +31,19 @@ from qdrant_client.models import PointStruct
 
 L = get_logger()
 
-class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
+class DocumentProcessingPipeline(BasePipeline[Document, dict]):
     """
-    Pipeline for processing biomedical documents from download to AI analysis.
+    Generic pipeline for processing biomedical documents from the documents table.
+    
+    Works with any document source (PMC, arXiv, local files) and populates
+    all downstream tables according to the schema:
+    - blocks (text extraction)
+    - figures (image extraction) 
+    - embeddings (BioBERT vectors)
+    - raw_nxml_metadata/raw_pdf_metadata (format-specific data)
     
     Handles:
-    - Document download and extraction
+    - Document download and extraction based on source_db
     - Format detection (PDF/NXML) 
     - Text extraction and parsing
     - Biomedical NER and embedding generation
@@ -53,10 +60,10 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
         temp_dir: Optional[str] = None,
         cleanup_temp_files: bool = True
     ):
-        # Create database source for unprocessed articles
+        # Create database source for unprocessed documents from documents table
         db_source = DatabaseSource(
-            table_name='pubmed_fulltext_links',
-            query_conditions={'full_text_downloaded': False}
+            table_name='documents',
+            query_conditions={'processed': False}
         )
         
         # Create validators for document processing
@@ -107,36 +114,36 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
             L.error(f"Failed to initialize AI models: {str(e)}")
             raise
     
-    def process_item(self, item: PMCArticleMetadata) -> Optional[dict]:
+    def process_item(self, item: Document) -> Optional[dict]:
         """
-        Process a single article through the complete pipeline.
+        Process a single document through the complete pipeline.
         
         Args:
-            item: PMCArticleMetadata for unprocessed article
+            item: Document from documents table
             
         Returns:
             Dict with processing results or None if failed
         """
-        article_id = item.pmcid
-        L.info(f"Processing article: {article_id}")
+        article_id = item.external_id
+        L.info(f"Processing document: {article_id} from {item.source_db}")
         
         temp_dir = None
         try:
             # Step 1: Setup temporary directory
             temp_dir = self._create_temp_dir(article_id)
             
-            # Step 2: Download and extract document
+            # Step 2: Download and extract document (source-agnostic)
             extracted_path = self._download_and_extract(item, temp_dir)
             if not extracted_path:
                 return None
             
             # Step 3: Detect document format and extract content
-            doc_info = self._extract_document_content(extracted_path, article_id)
+            doc_info = self._extract_document_content(extracted_path, item)
             if not doc_info:
                 return None
             
             # Step 4: Store document metadata and blocks
-            storage_result = self._store_document_data(doc_info)
+            storage_result = self._store_document_data(doc_info, item)
             if not storage_result:
                 return None
             
@@ -149,7 +156,9 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
             self._mark_as_processed(item)
             
             return {
-                'article_id': article_id,
+                'doc_id': item.doc_id,
+                'external_id': article_id,
+                'source_db': item.source_db,
                 'format': doc_info['format'],
                 'blocks_count': len(doc_info['blocks']),
                 'ai_processed': ai_result is not None,
@@ -172,13 +181,24 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
         temp_dir.mkdir(parents=True, exist_ok=True)
         return temp_dir
     
-    def _download_and_extract(self, item: PMCArticleMetadata, temp_dir: Path) -> Optional[Path]:
-        """Download and extract article archive."""
+    def _download_pmc_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Download and extract PMC document."""
         try:
-            base_url = "https://ftp.ncbi.nlm.nih.gov/pub/pmc/"
-            full_url = urljoin(base_url, item.ftp_path)
+            # Extract FTP path from notes field (temporary solution)
+            # TODO: Store FTP path in a proper field or lookup table
+            if not item.notes or "FTP Path:" not in item.notes:
+                L.error(f"No FTP path found for PMC document {item.external_id}")
+                return None
             
-            tarball_filename = Path(item.ftp_path).name
+            ftp_path = item.notes.split("FTP Path: ")[1].split(",")[0].strip()
+            if not ftp_path:
+                L.error(f"Invalid FTP path for PMC document {item.external_id}")
+                return None
+                
+            base_url = "https://ftp.ncbi.nlm.nih.gov/pub/pmc/"
+            full_url = urljoin(base_url, ftp_path)
+            
+            tarball_filename = Path(ftp_path).name
             tarball_path = temp_dir / tarball_filename
             
             L.debug(f"Downloading {full_url} to {tarball_path}")
@@ -195,10 +215,102 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
             return extracted_path
             
         except Exception as e:
-            L.error(f"Download/extraction failed for {item.pmcid}: {str(e)}")
+            L.error(f"PMC download failed for {item.external_id}: {str(e)}")
             return None
     
-    def _extract_document_content(self, extracted_path: Path, article_id: str) -> Optional[dict]:
+    def _download_arxiv_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Download arXiv document (placeholder for future implementation)."""
+        L.warning(f"arXiv download not yet implemented for {item.external_id}")
+        return None
+    
+    def _process_local_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Process local document file."""
+        if item.source_file and Path(item.source_file).exists():
+            return Path(item.source_file)
+        L.error(f"Local file not found: {item.source_file}")
+        return None
+    
+    def _download_and_extract(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Download and extract document based on source database."""
+        try:
+            if item.source_db.upper() == "PMC":
+                return self._download_pmc_document(item, temp_dir)
+            elif item.source_db.upper() == "ARXIV":
+                return self._download_arxiv_document(item, temp_dir)
+            elif item.source_db.upper() == "LOCAL":
+                return self._process_local_document(item, temp_dir)
+            else:
+                L.error(f"Unsupported source database: {item.source_db}")
+                return None
+                
+        except Exception as e:
+            L.error(f"Download/extraction failed for {item.external_id}: {str(e)}")
+            return None
+    
+    def _download_pmc_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Download and extract PMC document."""
+        try:
+            # Extract FTP path from notes field
+            if not item.notes or "FTP Path:" not in item.notes:
+                L.error(f"No FTP path found for PMC document {item.external_id}")
+                return None
+            
+            ftp_path = item.notes.split("FTP Path: ")[1].split(",")[0].strip()
+            if not ftp_path:
+                L.error(f"Invalid FTP path for PMC document {item.external_id}")
+                return None
+                
+            base_url = "https://ftp.ncbi.nlm.nih.gov/pub/pmc/"
+            full_url = urljoin(base_url, ftp_path)
+            
+            tarball_filename = Path(ftp_path).name
+            tarball_path = temp_dir / tarball_filename
+            
+            L.debug(f"Downloading {full_url} to {tarball_path}")
+            
+            fetcher = TarballFetcher(self.temp_root.parent)
+            downloaded_path = fetcher.download(full_url, target_path=tarball_path)
+            
+            if not downloaded_path:
+                L.error(f"Failed to download {full_url}")
+                return None
+            
+            # Extract contents
+            extracted_path = fetcher.extract(downloaded_path, extract_to=temp_dir)
+            return extracted_path
+            
+        except Exception as e:
+            L.error(f"PMC download failed for {item.external_id}: {str(e)}")
+            return None
+    
+    def _download_arxiv_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Download arXiv document (placeholder for future implementation)."""
+        L.warning(f"arXiv download not yet implemented for {item.external_id}")
+        return None
+    
+    def _process_local_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Process local document file."""
+        try:
+            if not item.source_file:
+                L.error(f"No source file specified for local document {item.external_id}")
+                return None
+            
+            source_path = Path(item.source_file)
+            if not source_path.exists():
+                L.error(f"Local file not found: {source_path}")
+                return None
+            
+            # Copy to temp directory for processing
+            target_path = temp_dir / source_path.name
+            shutil.copy2(source_path, target_path)
+            
+            return temp_dir
+            
+        except Exception as e:
+            L.error(f"Local file processing failed for {item.external_id}: {str(e)}")
+            return None
+    
+    def _extract_document_content(self, extracted_path: Path, item: Document) -> Optional[dict]:
         """Extract content from PDF or NXML document."""
         temp_dir = extracted_path
         
@@ -207,32 +319,39 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
         nxml_path = next(temp_dir.rglob("*.nxml"), None)
         
         if not pdf_path and not nxml_path:
-            L.warning(f"No PDF or NXML found for {article_id}")
+            L.warning(f"No PDF or NXML found for {item.external_id}")
             return None
         
         if pdf_path:
-            return self._process_pdf(pdf_path, article_id)
+            return self._process_pdf(pdf_path, item)
         elif nxml_path:
-            return self._process_nxml(nxml_path, article_id)
+            return self._process_nxml(nxml_path, item)
         
         return None
     
-    def _process_pdf(self, pdf_path: Path, article_id: str) -> Optional[dict]:
+    def _process_pdf(self, pdf_path: Path, item: Document) -> Optional[dict]:
         """Process PDF document."""
         try:
             # Extract metadata
             meta_reader = PDFReadMeta()
             pdf_metadata = meta_reader.extract_metadata(pdf_path=pdf_path)
             
+            if not pdf_metadata:
+                L.error(f"Failed to extract PDF metadata for {item.external_id}")
+                return None
+            
+            # Set the document ID to match our Document record
+            pdf_metadata.doc_id = item.doc_id
+            
             # Extract text blocks
             block_extractor = PDFBlockExtractor()
             text_blocks = block_extractor.extract_blocks(
-                doc_id=pdf_metadata.doc_id, 
+                doc_id=item.doc_id, 
                 pdf_path=pdf_path
             )
             
             if not text_blocks:
-                L.warning(f"No text blocks extracted from PDF: {article_id}")
+                L.warning(f"No text blocks extracted from PDF: {item.external_id}")
                 return None
             
             # Validate blocks
@@ -247,23 +366,27 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
             }
             
         except Exception as e:
-            L.error(f"PDF processing failed for {article_id}: {str(e)}")
+            L.error(f"PDF processing failed for {item.external_id}: {str(e)}")
             return None
     
-    def _process_nxml(self, nxml_path: Path, article_id: str) -> Optional[dict]:
+    def _process_nxml(self, nxml_path: Path, item: Document) -> Optional[dict]:
         """Process NXML document."""
         try:
-            # Parse NXML
-            parser = PubMedNXMLParser(nxml_path)
+            # Parse NXML with proper parameters
+            parser = PubMedNXMLParser(
+                file_path=str(nxml_path),
+                doc_id=item.doc_id,
+                source_db=item.source_db
+            )
             
             # Extract metadata
-            nxml_metadata = parser.get_metadata()
+            nxml_metadata = parser.get_nxml_metadata()
             
             # Extract blocks
             text_blocks = list(parser.extract_blocks())
             
             if not text_blocks:
-                L.warning(f"No text blocks extracted from NXML: {article_id}")
+                L.warning(f"No text blocks extracted from NXML: {item.external_id}")
                 return None
             
             # Validate blocks
@@ -278,7 +401,7 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
             }
             
         except Exception as e:
-            L.error(f"NXML processing failed for {article_id}: {str(e)}")
+            L.error(f"NXML processing failed for {item.external_id}: {str(e)}")
             return None
     
     def _validate_blocks(self, blocks: List, block_model) -> List:
@@ -305,49 +428,57 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
         
         return validated_blocks
     
-    def _store_document_data(self, doc_info: dict) -> bool:
-        """Store document metadata and blocks in database."""
+    def _store_document_data(self, doc_info: dict, item: Document) -> bool:
+        """Store document metadata and blocks in database according to schema."""
         try:
             format_type = doc_info['format']
             metadata = doc_info['metadata']
             blocks = doc_info['blocks']
             
-            # Store metadata
+            # Store format-specific metadata in appropriate tables
             if format_type == 'pdf':
-                table_name = 'pdf_metadata'
+                # Store in raw_pdf_metadata table
                 CRUD.insert(
-                    table=table_name,
+                    table='raw_pdf_metadata',
                     model=PDFMetadata,
                     data=metadata
                 )
                 
-                # Store blocks
+                # Store blocks in blocks table (generic)
+                for block in blocks:
+                    # Ensure block has correct doc_id
+                    block.doc_id = item.doc_id
+                
                 CRUD.bulk_insert(
-                    table='pdf_blocks',
+                    table='blocks',
                     model=PDFBlock,
                     data_list=blocks
                 )
                 
             elif format_type == 'nxml':
-                table_name = 'nxml_metadata'
+                # Store in raw_nxml_metadata table
                 CRUD.insert(
-                    table=table_name,
+                    table='raw_nxml_metadata',
                     model=NXMLMetadata,
                     data=metadata
                 )
                 
-                # Store blocks
+                # Store blocks in blocks table (generic)
+                for block in blocks:
+                    # Ensure block has correct doc_id
+                    block.doc_id = item.doc_id
+                
                 CRUD.bulk_insert(
-                    table='nxml_blocks',
+                    table='blocks',
                     model=NXMLBlock,
                     data_list=blocks
                 )
             
-            L.info(f"Stored {format_type} metadata and {len(blocks)} blocks")
+            L.info(f"Stored {format_type} metadata and {len(blocks)} blocks for {item.external_id}")
             return True
             
         except Exception as e:
-            L.error(f"Failed to store document data: {str(e)}")
+            L.error(f"Failed to store document data for {item.external_id}: {str(e)}")
             return False
     
     def _process_with_ai(self, blocks: List) -> Optional[dict]:
@@ -417,18 +548,18 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
             L.error(f"AI processing failed: {str(e)}")
             return None
     
-    def _mark_as_processed(self, item: PMCArticleMetadata):
-        """Mark article as processed in database."""
+    def _mark_as_processed(self, item: Document):
+        """Mark document as processed in database."""
         try:
             CRUD.update(
-                table='pubmed_fulltext_links',
-                model=PMCArticleMetadata,
-                updates={"full_text_downloaded": True},
-                id_field='pmcid',
-                id_value=item.pmcid
+                table='documents',
+                model=Document,
+                updates={"processed": True},
+                id_field='doc_id',
+                id_value=item.doc_id
             )
         except Exception as e:
-            L.error(f"Failed to mark article as processed: {str(e)}")
+            L.error(f"Failed to mark document as processed: {str(e)}")
     
     def _cleanup_temp_dir(self, temp_dir: Path):
         """Clean up temporary directory."""
@@ -438,9 +569,9 @@ class DocumentProcessingPipeline(BasePipeline[PMCArticleMetadata, dict]):
         except Exception as e:
             L.warning(f"Failed to cleanup temp directory {temp_dir}: {str(e)}")
     
-    def store_item(self, result: dict) -> bool:
-        """Store pipeline result (already handled in process_item)."""
-        return result is not None
+    def store_item(self, item: dict) -> bool:
+        """Store pipeline result (processing is handled in process_item)."""
+        return item is not None
 
 def run_document_processing_pipeline(
     batch_size: int = 5,
@@ -452,24 +583,36 @@ def run_document_processing_pipeline(
     Execute the document processing pipeline.
     
     Args:
-        batch_size: Number of articles to process simultaneously
-        max_articles: Maximum articles to process (None for all)
+        batch_size: Number of documents to process simultaneously
+        max_articles: Maximum documents to process (None for all)
         enable_ai: Whether to run AI processing (NER/embeddings)
         enable_embeddings: Whether to generate embeddings
         
     Returns:
         PipelineResult with execution statistics
     """
-    # Create necessary tables
+    # Create necessary tables according to schema
     CRUD.create_table_if_not_exists(
-        table='pdf_metadata',
+        table='documents',
+        model=Document,
+        primary_key='doc_id'
+    )
+    
+    CRUD.create_table_if_not_exists(
+        table='raw_pdf_metadata',
         model=PDFMetadata,
         primary_key='doc_id'
     )
     
     CRUD.create_table_if_not_exists(
-        table='pdf_blocks',
-        model=PDFBlock,
+        table='raw_nxml_metadata',
+        model=NXMLMetadata,
+        primary_key='doc_id'
+    )
+    
+    CRUD.create_table_if_not_exists(
+        table='blocks',
+        model=PDFBlock,  # Use as representative block model
         primary_key='block_id'
     )
     
@@ -491,12 +634,12 @@ def run_document_processing_pipeline(
     # Log summary
     if result.status.value == "success":
         L.info(f"Document processing pipeline completed successfully:")
-        L.info(f"  - Processed: {result.processed_count} articles")
+        L.info(f"  - Processed: {result.processed_count} documents")
         L.info(f"  - Execution time: {result.execution_time:.2f} seconds")
     else:
         L.error(f"Document processing pipeline completed with errors:")
-        L.error(f"  - Processed: {result.processed_count} articles")
-        L.error(f"  - Failed: {result.failed_count} articles")
+        L.error(f"  - Processed: {result.processed_count} documents")
+        L.error(f"  - Failed: {result.failed_count} documents")
     
     return result
 

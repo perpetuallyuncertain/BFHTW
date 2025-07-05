@@ -7,17 +7,18 @@ validated data processing with comprehensive error handling.
 
 from typing import Optional, List
 from pathlib import Path
+import uuid
 
 from BFHTW.pipelines.base_pipeline import BasePipeline, PipelineResult
 from BFHTW.pipelines.data_sources import PubMedCentralSource
 from BFHTW.pipelines.validation import create_metadata_validators
-from BFHTW.models.pubmed_pmc import PMCArticleMetadata
+from BFHTW.models.document_main import Document
 from BFHTW.utils.crud.crud import CRUD
 from BFHTW.utils.logs import get_logger
 
 L = get_logger()
 
-class PubMedMetadataPipeline(BasePipeline[dict, PMCArticleMetadata]):
+class PubMedMetadataPipeline(BasePipeline[dict, Document]):
     """
     Pipeline for fetching and validating PubMed Central article metadata.
     
@@ -40,12 +41,12 @@ class PubMedMetadataPipeline(BasePipeline[dict, PMCArticleMetadata]):
             update_reference_files=update_reference_files
         )
         
-        # Create validators for PMC article metadata
-        required_fields = ['pmcid', 'ftp_path', 'source_db']
+        # Create validators for document metadata
+        required_fields = ['external_id', 'source_db', 'format']
         foreign_keys = {} if not strict_validation else {}  # Add FK validation if needed
         
         validators = create_metadata_validators(
-            model=PMCArticleMetadata,
+            model=Document,
             required_fields=required_fields,
             foreign_keys=foreign_keys
         )
@@ -60,7 +61,7 @@ class PubMedMetadataPipeline(BasePipeline[dict, PMCArticleMetadata]):
         
         self.strict_validation = strict_validation
     
-    def process_item(self, item: dict) -> Optional[PMCArticleMetadata]:
+    def process_item(self, item: dict) -> Optional[Document]:
         """
         Process a single metadata item from PMC source.
         
@@ -68,31 +69,47 @@ class PubMedMetadataPipeline(BasePipeline[dict, PMCArticleMetadata]):
             item: Raw metadata dict from PMC source
             
         Returns:
-            PMCArticleMetadata instance or None if processing fails
+            Document instance or None if processing fails
         """
         try:
-            # Create PMC article metadata model
-            metadata = PMCArticleMetadata(**item)
+            # Create Document instance according to schema
+            document = Document(
+                doc_id=str(uuid.uuid4()),
+                source_db="PMC",
+                external_id=item.get('pmcid', ''),
+                format="nxml",
+                title=item.get('title'),
+                source_file=item.get('ftp_path', '').split('/')[-1] if item.get('ftp_path') else None,
+                retrieved_at=None,
+                processed=False,
+                has_figures=None,
+                qdrant_synced=False,
+                notes=f"FTP Path: {item.get('ftp_path', '')}, License: {item.get('license_type', '')}",
+                search_tags=None,
+                retrival_context=None,
+                ingest_pipeline="pubmed_metadata_pipeline",
+                license_type=item.get('license_type'),
+                publication_date=None,
+                authors=None,
+                journal=None,
+                abstract=None,
+                clinical_trial_ref=None,
+                doi=None
+            )
             
-            # Additional processing/enrichment could go here
-            # For example:
-            # - URL validation
-            # - File size checking
-            # - Metadata enhancement
-            
-            return metadata
+            return document
             
         except Exception as e:
             L.error(f"Failed to process metadata item: {str(e)}")
             L.error(f"Item data: {item}")
             return None
     
-    def store_item(self, item: PMCArticleMetadata) -> bool:
+    def store_item(self, item: Document) -> bool:
         """
-        Store processed metadata in database.
+        Store processed document in database.
         
         Args:
-            item: Validated PMCArticleMetadata instance
+            item: Validated Document instance
             
         Returns:
             True if storage successful, False otherwise
@@ -100,32 +117,32 @@ class PubMedMetadataPipeline(BasePipeline[dict, PMCArticleMetadata]):
         try:
             # Check for existing record to avoid duplicates
             existing = CRUD.get(
-                table='pubmed_fulltext_links',
-                model=PMCArticleMetadata,
-                id_field='pmcid',
-                id_value=item.pmcid
+                table='documents',
+                model=Document,
+                id_field='external_id',
+                id_value=item.external_id
             )
             
             if existing and self.strict_validation:
-                L.warning(f"Duplicate PMCID found, skipping: {item.pmcid}")
+                L.warning(f"Duplicate external_id found, skipping: {item.external_id}")
                 return False
             
             # Store in database
             result = CRUD.insert(
-                table='pubmed_fulltext_links',
-                model=PMCArticleMetadata,
+                table='documents',
+                model=Document,
                 data=item
             )
             
             if result:
-                L.debug(f"Stored metadata for PMCID: {item.pmcid}")
+                L.debug(f"Stored document for external_id: {item.external_id}")
                 return True
             else:
-                L.error(f"Failed to store metadata for PMCID: {item.pmcid}")
+                L.error(f"Failed to store document for external_id: {item.external_id}")
                 return False
                 
         except Exception as e:
-            L.error(f"Error storing metadata for PMCID {item.pmcid}: {str(e)}")
+            L.error(f"Error storing document for external_id {item.external_id}: {str(e)}")
             return False
 
 def run_pubmed_metadata_pipeline(
@@ -159,9 +176,9 @@ def run_pubmed_metadata_pipeline(
     
     # Create table if not exists
     CRUD.create_table_if_not_exists(
-        table='pubmed_fulltext_links',
-        model=PMCArticleMetadata,
-        primary_key='pmcid'
+        table='documents',
+        model=Document,
+        primary_key='doc_id'
     )
     
     # Execute pipeline
