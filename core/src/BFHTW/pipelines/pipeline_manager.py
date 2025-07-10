@@ -15,6 +15,7 @@ import schedule
 import time
 
 from BFHTW.pipelines.base_pipeline import BasePipeline, PipelineResult, PipelineStatus
+from BFHTW.pipelines.data_sources.registry import get_registry
 from BFHTW.utils.logs import get_logger
 
 L = get_logger()
@@ -70,6 +71,9 @@ class PipelineManager:
         self.executions: List[PipelineExecution] = []
         self.running_pipelines: Dict[str, PipelineExecution] = {}
         
+        # Get data source registry
+        self.data_source_registry = get_registry()
+        
         # Load configuration
         self.load_config()
         
@@ -91,9 +95,14 @@ class PipelineManager:
                     config_data = json.load(f)
             
             for name, config in config_data.get('pipelines', {}).items():
+                schedule_type = config.get('schedule_type', 'manual')
+                if isinstance(schedule_type, str):
+                    schedule_type = ScheduleType(schedule_type)
+                
                 self.pipelines[name] = PipelineConfig(
                     name=name,
-                    **config
+                    schedule_type=schedule_type,
+                    **{k: v for k, v in config.items() if k != 'schedule_type'}
                 )
             
             L.info(f"Loaded configuration for {len(self.pipelines)} pipelines")
@@ -140,9 +149,14 @@ class PipelineManager:
         
         # Load the default config
         for name, config in default_config['pipelines'].items():
+            schedule_type = config.get('schedule_type', 'manual')
+            if isinstance(schedule_type, str):
+                schedule_type = ScheduleType(schedule_type)
+            
             self.pipelines[name] = PipelineConfig(
                 name=name,
-                **config
+                schedule_type=schedule_type,
+                **{k: v for k, v in config.items() if k != 'schedule_type'}
             )
         
         L.info(f"Created default configuration with {len(self.pipelines)} pipelines")
@@ -158,12 +172,12 @@ class PipelineManager:
                     schedule.every().hour.do(self.run_pipeline, pipeline_name)
                     
                 elif config.schedule_type == ScheduleType.DAILY:
-                    time_str = config.schedule_params.get('time', '02:00')
+                    time_str = (config.schedule_params or {}).get('time', '02:00')
                     schedule.every().day.at(time_str).do(self.run_pipeline, pipeline_name)
                     
                 elif config.schedule_type == ScheduleType.WEEKLY:
-                    day = config.schedule_params.get('day', 'monday')
-                    time_str = config.schedule_params.get('time', '02:00')
+                    day = (config.schedule_params or {}).get('day', 'monday')
+                    time_str = (config.schedule_params or {}).get('time', '02:00')
                     getattr(schedule.every(), day).at(time_str).do(self.run_pipeline, pipeline_name)
                 
                 L.info(f"Scheduled pipeline '{pipeline_name}' for {config.schedule_type.value} execution")
@@ -278,7 +292,7 @@ class PipelineManager:
         pipeline_class = getattr(module, class_name)
         
         # Merge parameters
-        params = {**config.parameters, **override_params}
+        params = {**(config.parameters or {}), **override_params}
         
         # Create instance
         return pipeline_class(**params)
@@ -328,6 +342,26 @@ class PipelineManager:
             except Exception as e:
                 L.error(f"Scheduler error: {str(e)}")
                 time.sleep(60)
+    
+    def get_available_data_sources(self) -> List[str]:
+        """Get list of available data sources."""
+        return self.data_source_registry.list_sources()
+    
+    def validate_data_source(self, name: str) -> bool:
+        """Validate a data source connection."""
+        return self.data_source_registry.validate_source(name)
+    
+    def get_data_source_info(self, name: str) -> Optional[dict]:
+        """Get information about a data source."""
+        info = self.data_source_registry.get_source_info(name)
+        if info:
+            return {
+                'name': info.name,
+                'description': info.description,
+                'enabled': info.enabled,
+                'class': info.source_class.__name__
+            }
+        return None
 
 # Convenience functions
 def create_pipeline_manager(config_file: Optional[str] = None) -> PipelineManager:

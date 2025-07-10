@@ -225,71 +225,6 @@ class DocumentProcessingPipeline(BasePipeline[Document, dict]):
     
     def _process_local_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
         """Process local document file."""
-        if item.source_file and Path(item.source_file).exists():
-            return Path(item.source_file)
-        L.error(f"Local file not found: {item.source_file}")
-        return None
-    
-    def _download_and_extract(self, item: Document, temp_dir: Path) -> Optional[Path]:
-        """Download and extract document based on source database."""
-        try:
-            if item.source_db.upper() == "PMC":
-                return self._download_pmc_document(item, temp_dir)
-            elif item.source_db.upper() == "ARXIV":
-                return self._download_arxiv_document(item, temp_dir)
-            elif item.source_db.upper() == "LOCAL":
-                return self._process_local_document(item, temp_dir)
-            else:
-                L.error(f"Unsupported source database: {item.source_db}")
-                return None
-                
-        except Exception as e:
-            L.error(f"Download/extraction failed for {item.external_id}: {str(e)}")
-            return None
-    
-    def _download_pmc_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
-        """Download and extract PMC document."""
-        try:
-            # Extract FTP path from notes field
-            if not item.notes or "FTP Path:" not in item.notes:
-                L.error(f"No FTP path found for PMC document {item.external_id}")
-                return None
-            
-            ftp_path = item.notes.split("FTP Path: ")[1].split(",")[0].strip()
-            if not ftp_path:
-                L.error(f"Invalid FTP path for PMC document {item.external_id}")
-                return None
-                
-            base_url = "https://ftp.ncbi.nlm.nih.gov/pub/pmc/"
-            full_url = urljoin(base_url, ftp_path)
-            
-            tarball_filename = Path(ftp_path).name
-            tarball_path = temp_dir / tarball_filename
-            
-            L.debug(f"Downloading {full_url} to {tarball_path}")
-            
-            fetcher = TarballFetcher(self.temp_root.parent)
-            downloaded_path = fetcher.download(full_url, target_path=tarball_path)
-            
-            if not downloaded_path:
-                L.error(f"Failed to download {full_url}")
-                return None
-            
-            # Extract contents
-            extracted_path = fetcher.extract(downloaded_path, extract_to=temp_dir)
-            return extracted_path
-            
-        except Exception as e:
-            L.error(f"PMC download failed for {item.external_id}: {str(e)}")
-            return None
-    
-    def _download_arxiv_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
-        """Download arXiv document (placeholder for future implementation)."""
-        L.warning(f"arXiv download not yet implemented for {item.external_id}")
-        return None
-    
-    def _process_local_document(self, item: Document, temp_dir: Path) -> Optional[Path]:
-        """Process local document file."""
         try:
             if not item.source_file:
                 L.error(f"No source file specified for local document {item.external_id}")
@@ -308,6 +243,23 @@ class DocumentProcessingPipeline(BasePipeline[Document, dict]):
             
         except Exception as e:
             L.error(f"Local file processing failed for {item.external_id}: {str(e)}")
+            return None
+    
+    def _download_and_extract(self, item: Document, temp_dir: Path) -> Optional[Path]:
+        """Download and extract document based on source database."""
+        try:
+            if item.source_db.upper() == "PMC":
+                return self._download_pmc_document(item, temp_dir)
+            elif item.source_db.upper() == "ARXIV":
+                return self._download_arxiv_document(item, temp_dir)
+            elif item.source_db.upper() == "LOCAL":
+                return self._process_local_document(item, temp_dir)
+            else:
+                L.error(f"Unsupported source database: {item.source_db}")
+                return None
+                
+        except Exception as e:
+            L.error(f"Download/extraction failed for {item.external_id}: {str(e)}")
             return None
     
     def _extract_document_content(self, extracted_path: Path, item: Document) -> Optional[dict]:

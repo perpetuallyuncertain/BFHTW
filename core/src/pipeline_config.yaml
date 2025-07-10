@@ -1,0 +1,24 @@
+pipelines:
+  document_processing:
+    dependencies:
+    - pubmed_metadata
+    enabled: true
+    max_runtime_minutes: 120
+    parameters:
+      batch_size: 5
+      enable_ai_processing: true
+      enable_embeddings: true
+    pipeline_class: BFHTW.pipelines.document_processing_pipeline.DocumentProcessingPipeline
+    schedule_params: {}
+    schedule_type: hourly
+  pubmed_metadata:
+    enabled: true
+    max_runtime_minutes: 30
+    parameters:
+      batch_size: 100
+      max_articles: 1000
+      update_reference_files: true
+    pipeline_class: BFHTW.pipelines.pubmed_pmc.pubmed_metadata_pipeline.PubMedMetadataPipeline
+    schedule_params:
+      time: 02:00
+    schedule_type: daily
