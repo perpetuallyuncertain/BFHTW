@@ -1,4 +1,4 @@
-# BFHTW - Biomedical Framework for Textual Health Workflows
+# OncoMap AI - Biomedical Framework for Textual Health Workflows
 
 > **RAG AI Model with BioBERT analyzed corpus and OpenAI assistants for biomedical literature processing**
 
